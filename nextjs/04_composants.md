@@ -54,25 +54,46 @@ mon-premier-projet/
 Crée `components/Bouton.tsx` :
 
 ```tsx
-export default function Bouton() {
-  return (
-    <button>Clique-moi</button>
-  )
+type BoutonProps = {
+  texte: string
+}
+
+export default function Bouton({ texte }: BoutonProps) {
+  return <button>{texte}</button>
 }
 ```
 
-### Étape 2 — L'utiliser dans une page
+On ajoute directement la prop `texte` — on en a besoin tout de suite dans le portfolio.
 
-Dans `app/page.tsx`, importe et utilise le composant :
+### Étape 2 — L'utiliser dans les pages du portfolio
+
+Dans `app/page.tsx` :
 
 ```tsx
 import Bouton from "@/components/Bouton"
 
-export default function HomePage() {
+export default function Home() {
   return (
     <main>
-      <h1>Page d'accueil</h1>
-      <Bouton />
+      <h1>Bonjour, je suis Belal</h1>
+      <p>Développeur web en formation.</p>
+      <Bouton texte="Me contacter" />
+    </main>
+  )
+}
+```
+
+Dans `app/contact/page.tsx` :
+
+```tsx
+import Bouton from "@/components/Bouton"
+
+export default function ContactPage() {
+  return (
+    <main>
+      <h1>Contact</h1>
+      <p>Remplis le formulaire et je te réponds dès que possible.</p>
+      <Bouton texte="Envoyer le message" />
     </main>
   )
 }
@@ -108,23 +129,7 @@ export default function Bouton({ texte }: BoutonProps) {
 }
 ```
 
-### L'utiliser avec différents textes
-
-```tsx
-import Bouton from "@/components/Bouton"
-
-export default function HomePage() {
-  return (
-    <main>
-      <Bouton texte="Envoyer" />
-      <Bouton texte="Annuler" />
-      <Bouton texte="Voir plus" />
-    </main>
-  )
-}
-```
-
-Même composant, trois boutons différents. C'est ça la puissance des composants.
+Même composant `Bouton`, utilisé avec des textes différents sur chaque page. C'est ça la puissance des composants.
 
 ---
 

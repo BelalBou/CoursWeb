@@ -38,7 +38,7 @@ La règle est simple : **dossier = URL, `page.tsx` = contenu**.
 
 ---
 
-## Créer ta première page
+## Créer ta première page — la page contact du portfolio
 
 Dans ton projet, crée un dossier `contact` dans `app/`, puis un fichier `page.tsx` dedans :
 
@@ -54,14 +54,14 @@ Dans ce fichier, écris ça :
 export default function ContactPage() {
   return (
     <main>
-      <h1>Page de contact</h1>
-      <p>Tu peux me contacter ici.</p>
+      <h1>Contact</h1>
+      <p>Remplis le formulaire et je te réponds dès que possible.</p>
     </main>
   )
 }
 ```
 
-Maintenant va sur **http://localhost:3000/contact** — ta page est là.
+Maintenant va sur **http://localhost:3000/contact** — ta page est là. On la stylisera dans le cours 05.
 
 ---
 
@@ -138,8 +138,11 @@ Dans `Navbar.tsx`, écris ça :
 export default function Navbar() {
   return (
     <nav>
-      <a href="/">Accueil</a>
-      <a href="/contact">Contact</a>
+      <span>Mon Portfolio</span>
+      <div>
+        <a href="/">Accueil</a>
+        <a href="/contact">Contact</a>
+      </div>
     </nav>
   )
 }

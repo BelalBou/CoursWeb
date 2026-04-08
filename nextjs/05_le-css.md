@@ -136,6 +136,120 @@ Dans les vrais projets, on mélange souvent CSS global + Tailwind, ou CSS global
 
 ---
 
+## Application sur le portfolio — styliser tout avec Tailwind
+
+On va maintenant appliquer Tailwind sur tous les fichiers du portfolio.
+
+### `components/Navbar.tsx`
+
+```tsx
+export default function Navbar() {
+  return (
+    <nav className="bg-white border-b border-gray-200 px-8 py-4 flex justify-between items-center">
+      <span className="text-xl font-bold text-gray-900">Mon Portfolio</span>
+      <div className="flex gap-6">
+        <a href="/" className="text-gray-600 hover:text-gray-900 font-medium">
+          Accueil
+        </a>
+        <a href="/contact" className="text-gray-600 hover:text-gray-900 font-medium">
+          Contact
+        </a>
+      </div>
+    </nav>
+  )
+}
+```
+
+### `components/Bouton.tsx`
+
+```tsx
+type BoutonProps = {
+  texte: string
+}
+
+export default function Bouton({ texte }: BoutonProps) {
+  return (
+    <button className="bg-gray-900 text-white px-6 py-3 rounded-lg font-medium hover:bg-gray-700">
+      {texte}
+    </button>
+  )
+}
+```
+
+### `app/page.tsx`
+
+```tsx
+import Bouton from "@/components/Bouton"
+
+export default function Home() {
+  return (
+    <main className="min-h-screen bg-gray-50 flex flex-col items-center justify-center px-8">
+      <div className="max-w-2xl text-center">
+        <h1 className="text-5xl font-bold text-gray-900 mb-4">
+          Bonjour, je suis Belal
+        </h1>
+        <p className="text-xl text-gray-500 mb-8">
+          Développeur web en formation. Je construis des projets avec Next.js, NestJS et bien plus.
+        </p>
+        <Bouton texte="Me contacter" />
+      </div>
+    </main>
+  )
+}
+```
+
+### `app/contact/page.tsx`
+
+```tsx
+import Bouton from "@/components/Bouton"
+
+export default function ContactPage() {
+  return (
+    <main className="min-h-screen bg-gray-50 flex flex-col items-center justify-center px-8">
+      <div className="max-w-xl w-full bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">Contact</h1>
+        <p className="text-gray-500 mb-6">Remplis le formulaire et je te réponds dès que possible.</p>
+
+        <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-1">
+            <label className="text-sm font-medium text-gray-700">Nom</label>
+            <input
+              type="text"
+              placeholder="Ton nom"
+              className="border border-gray-300 rounded-lg px-4 py-2 text-gray-900 outline-none focus:border-gray-900"
+            />
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <label className="text-sm font-medium text-gray-700">Email</label>
+            <input
+              type="email"
+              placeholder="ton@email.com"
+              className="border border-gray-300 rounded-lg px-4 py-2 text-gray-900 outline-none focus:border-gray-900"
+            />
+          </div>
+
+          <div className="flex flex-col gap-1">
+            <label className="text-sm font-medium text-gray-700">Message</label>
+            <textarea
+              placeholder="Ton message..."
+              rows={4}
+              className="border border-gray-300 rounded-lg px-4 py-2 text-gray-900 outline-none focus:border-gray-900 resize-none"
+            />
+          </div>
+
+          <Bouton texte="Envoyer le message" />
+        </div>
+      </div>
+    </main>
+  )
+}
+```
+
+Résultat : une navbar propre en haut, une page d'accueil centrée avec hero, et une page contact avec un vrai formulaire stylisé.
+
+---
+
 ## Résumé
 
 - `globals.css` = styles pour tout le site, importé dans `layout.tsx`
