@@ -54,7 +54,7 @@ Il y a deux endroits où ça peut se passer :
 - **Dans le navigateur** (ton Chrome, Firefox...) → c'est ce que fait React tout seul
 - **Sur le serveur** (un ordinateur qui envoie la page déjà faite) → c'est ce que Next.js peut faire
 
-Pour l'instant, retiens juste que Next.js peut faire les deux. On reviendra là-dessus plus tard.
+Pour l'instant, retiens juste que Next.js peut faire les deux.
 
 ---
 
@@ -67,7 +67,7 @@ Pour l'instant, retiens juste que Next.js peut faire les deux. On reviendra là-
 
 ---
 
-## Questions fréquentes
+## Questions
 
 *(Cette section sera remplie au fur et à mesure de tes questions)*
 

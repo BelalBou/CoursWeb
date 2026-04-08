@@ -79,7 +79,7 @@ Quand tu regardes les fichiers du projet, tu vois des extensions `.tsx` et `.ts`
 
 La plupart du temps dans Next.js, tu vas utiliser **`.tsx`** pour tes pages et composants.
 
-On a un cours entier dédié à TypeScript qui arrivera quand on commencera à vraiment l'utiliser. Pour l'instant, retiens juste : **TypeScript = JavaScript plus sécurisé**.
+Pour l'instant, retiens juste : **TypeScript = JavaScript plus sécurisé**.
 
 ---
 
@@ -138,7 +138,7 @@ Le dossier le plus important pour toi en ce moment : **`app/`**
 
 ---
 
-## Questions fréquentes
+## Questions
 
 *(Cette section sera remplie au fur et à mesure de tes questions)*
 

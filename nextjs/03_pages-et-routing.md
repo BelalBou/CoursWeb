@@ -194,7 +194,6 @@ Dans `page.tsx`, tu remarques qu'on n'a pas encore mis de types TypeScript parti
 
 Le nom `React.ReactNode` qu'on voit dans `layout.tsx` est un **type TypeScript**.
 Il dit : "children peut être n'importe quoi qu'on peut afficher : du texte, des balises HTML, d'autres composants..."
-On verra les types TypeScript en détail dans le cours dédié.
 
 ---
 
@@ -208,7 +207,7 @@ On verra les types TypeScript en détail dans le cours dédié.
 
 ---
 
-## Questions fréquentes
+## Questions
 
 **Q : On peut voir un exemple concret avec une navbar dans le layout ?**
 

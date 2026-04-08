@@ -44,6 +44,6 @@ Le `: number` après `age`, c'est ce qu'on appelle un **type**. On dit à TypeSc
 
 ---
 
-## Questions fréquentes
+## Questions
 
 *(Cette section sera remplie au fur et à mesure de tes questions)*
