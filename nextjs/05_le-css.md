@@ -83,6 +83,34 @@ export default function Carte() {
 
 > **Pourquoi `className` et pas `class` ?** En HTML on écrit `class="..."`. En React/JSX, `class` est un mot réservé en JavaScript, donc on utilise `className` à la place. C'est juste une règle de React.
 
+### Appliquer plusieurs classes sur un même élément
+
+Imagine ce CSS :
+
+```css
+/* Carte.module.css */
+.carte {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.mise-en-avant {
+  background-color: lightyellow;
+  font-weight: bold;
+}
+```
+
+Si tu veux qu'un élément ait **les deux classes en même temps**, tu utilises des backticks `` ` `` et `${}` :
+
+```tsx
+<div className={`${styles.carte} ${styles.mise-en-avant}`}>
+  Cette carte est mise en avant
+</div>
+```
+
+`${}` injecte la valeur d'une variable dans du texte. Ici on injecte les deux classes avec un espace entre elles — exactement comme écrire `class="carte mise-en-avant"` en HTML.
+
 ### L'avantage des CSS Modules
 
 Next.js transforme automatiquement le nom de tes classes pour les rendre uniques :
@@ -260,6 +288,16 @@ Résultat : une navbar propre en haut, une page d'accueil centrée avec hero, et
 ---
 
 ## Questions
+
+**Q : Comment mettre plusieurs classes CSS Modules sur un même élément ?**
+
+Avec des backticks et `${}` :
+```tsx
+<div className={`${styles.carte} ${styles.titre}`}>
+```
+C'est équivalent à `class="carte titre"` en HTML classique.
+
+---
 
 **Q : Pourquoi mes boutons deviennent du texte sans style quand j'utilise Tailwind ?**
 
