@@ -14,13 +14,13 @@ TypeScript, c'est la même boîte, mais chaque pièce a une forme précise et ne
 
 **En JavaScript :**
 ```js
-let age = "vingt"; // personne ne dit rien
-age + 5;           // ça donne "vingt5" — c'est n'importe quoi mais JS s'en fout
+let age = "vingt"
+age + 5           // ça donne "vingt5" — c'est n'importe quoi mais JS s'en fout
 ```
 
 **En TypeScript :**
 ```ts
-let age: number = "vingt"; // ERREUR immédiate : "vingt" n'est pas un nombre !
+let age: number = "vingt" // ERREUR immédiate : "vingt" n'est pas un nombre !
 ```
 
 Le `: number` après `age`, c'est ce qu'on appelle un **type**. On dit à TypeScript : "cette variable doit toujours être un nombre". Si tu essaies de mettre du texte dedans, il crie tout de suite.
@@ -37,8 +37,6 @@ Avec TypeScript, les fichiers changent d'extension :
 | `.ts` | TypeScript |
 | `.jsx` | JavaScript avec du HTML React dedans |
 | `.tsx` | TypeScript avec du HTML React dedans |
-
-Dans Next.js, tu vas surtout utiliser **`.tsx`** pour tes pages et composants.
 
 ---
 

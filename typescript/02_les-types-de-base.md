@@ -32,7 +32,7 @@ let prix: number = 9.99
 
 ```ts
 let estConnecte: boolean = true
-let aPayé: boolean = false
+let aPaye: boolean = false
 ```
 
 ### `array` — une liste
@@ -46,6 +46,49 @@ Le `[]` après le type veut dire "une liste de...". Donc `string[]` = une liste 
 
 ---
 
+## Les unions — plusieurs types possibles
+
+Si une variable peut contenir plusieurs types différents, on utilise `|` qui veut dire **"ou"** :
+
+```ts
+let identifiant: string | number = "abc123"
+identifiant = 42  // aussi valide
+```
+
+Pour un tableau avec plusieurs types :
+
+```ts
+let melange: (string | number | boolean)[] = ["Belal", 25, true]
+```
+
+TypeScript accepte seulement ces types — tout le reste est refusé :
+
+```ts
+melange.push("texte") // ok
+melange.push(42)      // ok
+melange.push(true)    // ok
+melange.push({})      // ERREUR — un objet n'est pas autorisé
+```
+
+---
+
+## `any` — le type "je m'en fous"
+
+Il existe un type spécial : `any`. Il veut dire "cette variable peut contenir n'importe quoi".
+
+```ts
+let truc: any = "du texte"
+truc = 42        // pas d'erreur
+truc = true      // pas d'erreur
+truc = [1, 2, 3] // pas d'erreur
+```
+
+C'est comme enlever la ceinture de sécurité : TypeScript arrête de vérifier quoi que ce soit.
+
+**Règle : évite `any` autant que possible.** Tu le verras dans du code existant, c'est pour ça qu'il faut le connaître.
+
+---
+
 ## TypeScript peut deviner le type tout seul
 
 Tu n'es pas obligé d'écrire le type à chaque fois. Si tu écris :
@@ -56,44 +99,31 @@ let prenom = "Belal"
 
 TypeScript voit que tu mets du texte dedans et devine automatiquement que `prenom` est de type `string`. C'est ce qu'on appelle **l'inférence de type**.
 
-Mais c'est une bonne habitude de l'écrire explicitement quand c'est pas évident.
-
----
-
-## Vu dans les cours Next.js — les types de props
-
-Dans le cours Next.js 04 sur les composants, on a vu ça :
-
-```tsx
-type BoutonProps = {
-  texte: string
-}
-
-export default function Bouton({ texte }: BoutonProps) {
-  return <button>{texte}</button>
-}
-```
-
-- `type BoutonProps = { ... }` → on crée un type personnalisé qui décrit la forme des props
-- `texte: string` → la prop `texte` doit être du texte
-- `{ texte }: BoutonProps` → on extrait `texte` du paquet, et ce paquet doit avoir la forme de `BoutonProps`
-
 ---
 
 ## Résumé
 
-- Un type = une étiquette sur une variable
-- `string` = texte, `number` = nombre, `boolean` = vrai/faux, `string[]` = liste de textes
+- `string` = texte, `number` = nombre, `boolean` = vrai/faux
+- `string[]` = liste de textes, `number[]` = liste de nombres
+- `|` = union, pour autoriser plusieurs types : `string | number`
+- `any` = aucune vérification — à éviter
 - TypeScript peut deviner le type tout seul (inférence)
-- `type NomDuType = { ... }` permet de créer ses propres types
 
 ---
 
 ## Questions
 
-*(Cette section sera remplie au fur et à mesure de tes questions)*
+**Q : Si un tableau contient des nombres, du texte et des booléens, c'est `any` comme type ?**
+
+Non ! On utilise une union : `(string | number | boolean)[]`
+TypeScript accepte seulement ces types — tout le reste est encore refusé.
+
+**Q : C'est quoi le type `any` ?**
+
+`any` = "n'importe quel type". TypeScript arrête de vérifier la variable.
+Utile à connaître car tu le verras dans du code existant, mais évite de l'utiliser.
 
 ---
 
 ## Prochain cours :
-**Cours TypeScript 03 — Les interfaces et les objets**
+**Cours TypeScript 03 — Les objets et le mot-clé `type`**

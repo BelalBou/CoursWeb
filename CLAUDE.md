@@ -37,7 +37,11 @@ CoursWeb/
 ├── typescript/
 │   ├── 01_cest-quoi-typescript.md
 │   ├── 02_les-types-de-base.md
-│   └── ...
+│   ├── 03_les-objets-et-type.md
+│   ├── 04_les-fonctions.md
+│   ├── 05_les-interfaces.md
+│   ├── 06_les-generiques.md
+│   └── 07_typescript-et-react.md
 ├── nestjs/
 ├── prisma/
 ├── postgresql/
