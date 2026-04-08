@@ -1,13 +1,6 @@
-# Cours TypeScript — Introduction
+# Cours TypeScript 01 — C'est quoi TypeScript ?
 
-> Ce cours sera complété au fur et à mesure qu'on utilise TypeScript dans les projets Next.js.
-> Chaque fois qu'on rencontre un concept TypeScript dans le code, on l'explique ici.
-
----
-
-## C'est quoi TypeScript ?
-
-TypeScript, c'est JavaScript avec des **règles de sécurité**.
+## TypeScript, c'est JavaScript avec des règles de sécurité
 
 Imagine que tu construis une maison avec des LEGO.
 JavaScript, c'est une boîte de LEGO où toutes les pièces sont mélangées et tu peux les mettre ensemble comme tu veux — même si ça tient pas vraiment.
@@ -34,16 +27,34 @@ Le `: number` après `age`, c'est ce qu'on appelle un **type**. On dit à TypeSc
 
 ---
 
-## Les concepts vus au fil des cours
+## Les extensions de fichiers
 
-*(Cette section sera remplie au fur et à mesure)*
+Avec TypeScript, les fichiers changent d'extension :
 
-### Vu dans le cours 02 — Installation
-- Les fichiers `.ts` et `.tsx` = fichiers TypeScript
-- `.tsx` = TypeScript avec du HTML React dedans
+| Extension | C'est quoi |
+|---|---|
+| `.js` | JavaScript classique |
+| `.ts` | TypeScript |
+| `.jsx` | JavaScript avec du HTML React dedans |
+| `.tsx` | TypeScript avec du HTML React dedans |
+
+Dans Next.js, tu vas surtout utiliser **`.tsx`** pour tes pages et composants.
+
+---
+
+## Résumé
+
+- TypeScript = JavaScript + règles de sécurité
+- Il détecte les erreurs pendant que tu écris
+- Les fichiers finissent en `.ts` ou `.tsx`
 
 ---
 
 ## Questions
 
 *(Cette section sera remplie au fur et à mesure de tes questions)*
+
+---
+
+## Prochain cours :
+**Cours TypeScript 02 — Les types de base**

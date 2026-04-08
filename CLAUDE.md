@@ -35,7 +35,9 @@ CoursWeb/
 │   ├── 03_pages-et-routing.md
 │   └── ...
 ├── typescript/
-│   └── 00_intro-typescript.md  ← complété au fil des cours
+│   ├── 01_cest-quoi-typescript.md
+│   ├── 02_les-types-de-base.md
+│   └── ...
 ├── nestjs/
 ├── prisma/
 ├── postgresql/
