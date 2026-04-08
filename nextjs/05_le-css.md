@@ -147,7 +147,25 @@ Dans les vrais projets, on mélange souvent CSS global + Tailwind, ou CSS global
 
 ## Questions
 
-*(Cette section sera remplie au fur et à mesure de tes questions)*
+**Q : Pourquoi mes boutons deviennent du texte sans style quand j'utilise Tailwind ?**
+
+Tailwind inclut un "reset CSS" appelé **Preflight** qui efface volontairement tous les styles par défaut du navigateur (boutons, titres, listes, liens...). C'est fait exprès pour avoir une base identique sur tous les navigateurs et tout contrôler soi-même.
+
+Pour redonner du style à un bouton, on utilise les classes Tailwind :
+
+```tsx
+<button className="bg-blue-500 text-white px-4 py-2 rounded">
+  Clique-moi
+</button>
+```
+
+| Classe | Ce qu'elle fait |
+|---|---|
+| `bg-blue-500` | fond bleu |
+| `text-white` | texte blanc |
+| `px-4` | espace gauche/droite |
+| `py-2` | espace haut/bas |
+| `rounded` | coins arrondis |
 
 ---
 
