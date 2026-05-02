@@ -55,4 +55,4 @@ Avec TypeScript, les fichiers changent d'extension :
 ---
 
 ## Prochain cours :
-**Cours TypeScript 02 — Les types de base**
+**[Cours TypeScript 02 — Les types de base](./02_les-types-de-base.md)**

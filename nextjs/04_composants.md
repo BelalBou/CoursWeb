@@ -177,4 +177,4 @@ Sans `: BoutonProps`, TypeScript ne saurait pas que `texte` doit être du texte 
 ---
 
 ## Prochain cours :
-**Cours 05 — Le CSS dans Next.js : styliser ses composants**
+**[Cours 05 — Le CSS dans Next.js](./05_le-css.md)**

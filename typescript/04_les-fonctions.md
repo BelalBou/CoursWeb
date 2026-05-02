@@ -150,4 +150,4 @@ Ici `Operation` décrit "une fonction qui prend deux nombres et retourne un nomb
 ---
 
 ## Prochain cours :
-**Cours TypeScript 05 — Les interfaces**
+**[Cours TypeScript 05 — Les interfaces](./05_les-interfaces.md)**

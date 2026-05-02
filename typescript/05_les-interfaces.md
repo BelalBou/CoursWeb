@@ -116,4 +116,4 @@ let catalogue: Produit[] = [
 ---
 
 ## Prochain cours :
-**Cours TypeScript 06 — Les génériques**
+**[Cours TypeScript 06 — Les génériques](./06_les-generiques.md)**

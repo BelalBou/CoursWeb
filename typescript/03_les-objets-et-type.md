@@ -143,4 +143,4 @@ let utilisateur: Utilisateur = {
 ---
 
 ## Prochain cours :
-**Cours TypeScript 04 — Les fonctions**
+**[Cours TypeScript 04 — Les fonctions](./04_les-fonctions.md)**

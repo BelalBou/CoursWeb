@@ -120,4 +120,4 @@ envelopper({ nom: "Belal" }) // Boite<{ nom: string }>
 ---
 
 ## Prochain cours :
-**Cours TypeScript 07 — TypeScript et React**
+**[Cours TypeScript 07 — TypeScript et React](./07_typescript-et-react.md)**

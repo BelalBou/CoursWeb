@@ -145,4 +145,4 @@ Le dossier le plus important pour toi en ce moment : **`app/`**
 ---
 
 ## Prochain cours :
-**Cours 03 — Les pages et le routing : comment créer de nouvelles pages**
+**[Cours 03 — Les pages et le routing](./03_pages-et-routing.md)**

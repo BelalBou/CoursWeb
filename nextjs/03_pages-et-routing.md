@@ -222,4 +222,4 @@ Voir la section "Exemple concret : ajouter une navbar" juste au-dessus.
 ---
 
 ## Prochain cours :
-**Cours 04 — Les composants : découper sa page en morceaux réutilisables**
+**[Cours 04 — Les composants](./04_composants.md)**
