@@ -119,5 +119,8 @@ envelopper({ nom: "Belal" }) // Boite<{ nom: string }>
 
 ---
 
-## Prochain cours :
-**[Cours TypeScript 07 — TypeScript et React](./07_typescript-et-react.md)**
+## Navigation
+
+- ← Précédent : [Cours TypeScript 05 — Les interfaces](./05_les-interfaces.md)
+- → Suivant : [Cours TypeScript 07 — TypeScript et React](./07_typescript-et-react.md)
+- Sommaire : [README](../README.md)

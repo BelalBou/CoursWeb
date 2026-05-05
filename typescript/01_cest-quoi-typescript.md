@@ -54,5 +54,8 @@ Avec TypeScript, les fichiers changent d'extension :
 
 ---
 
-## Prochain cours :
-**[Cours TypeScript 02 — Les types de base](./02_les-types-de-base.md)**
+## Navigation
+
+- ← Précédent : [Sommaire](../README.md)
+- → Suivant : [Cours TypeScript 02 — Les types de base](./02_les-types-de-base.md)
+- Sommaire : [README](../README.md)

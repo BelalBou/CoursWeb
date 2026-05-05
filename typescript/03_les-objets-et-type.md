@@ -142,5 +142,8 @@ let utilisateur: Utilisateur = {
 
 ---
 
-## Prochain cours :
-**[Cours TypeScript 04 — Les fonctions](./04_les-fonctions.md)**
+## Navigation
+
+- ← Précédent : [Cours TypeScript 02 — Les types de base](./02_les-types-de-base.md)
+- → Suivant : [Cours TypeScript 04 — Les fonctions](./04_les-fonctions.md)
+- Sommaire : [README](../README.md)

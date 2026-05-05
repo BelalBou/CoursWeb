@@ -321,5 +321,8 @@ Pour redonner du style à un bouton, on utilise les classes Tailwind :
 
 ---
 
-## Prochain cours :
-**[Cours 06 — Les liens et la navigation entre pages](./06_liens-et-navigation.md)**
+## Navigation
+
+- ← Précédent : [Cours 04 — Les composants](./04_composants.md)
+- → Suivant : [Cours 06 — Les liens et la navigation entre pages](./06_liens-et-navigation.md)
+- Sommaire : [README](../README.md)

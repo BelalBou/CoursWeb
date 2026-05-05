@@ -118,3 +118,11 @@ const [utilisateur, setUtilisateur] = useState<{ nom: string } | null>(null)
 ## Questions
 
 *(Cette section sera remplie au fur et à mesure de tes questions)*
+
+---
+
+## Navigation
+
+- ← Précédent : [Cours TypeScript 06 — Les génériques](./06_les-generiques.md)
+- → Suivant : [Sommaire](../README.md)
+- Sommaire : [README](../README.md)

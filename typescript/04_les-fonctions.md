@@ -149,5 +149,8 @@ Ici `Operation` décrit "une fonction qui prend deux nombres et retourne un nomb
 
 ---
 
-## Prochain cours :
-**[Cours TypeScript 05 — Les interfaces](./05_les-interfaces.md)**
+## Navigation
+
+- ← Précédent : [Cours TypeScript 03 — Les objets et le mot-clé `type`](./03_les-objets-et-type.md)
+- → Suivant : [Cours TypeScript 05 — Les interfaces](./05_les-interfaces.md)
+- Sommaire : [README](../README.md)

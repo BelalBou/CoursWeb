@@ -73,5 +73,8 @@ Pour l'instant, retiens juste que Next.js peut faire les deux.
 
 ---
 
-## Prochain cours :
-**[Cours 02 — Installer Next.js et créer ton premier projet](./02_installation.md)**
+## Navigation
+
+- ← Précédent : [Sommaire](../README.md)
+- → Suivant : [Cours 02 — Installer Next.js et créer ton premier projet](./02_installation.md)
+- Sommaire : [README](../README.md)

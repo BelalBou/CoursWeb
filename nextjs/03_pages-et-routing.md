@@ -221,5 +221,8 @@ Voir la section "Exemple concret : ajouter une navbar" juste au-dessus.
 
 ---
 
-## Prochain cours :
-**[Cours 04 — Les composants](./04_composants.md)**
+## Navigation
+
+- ← Précédent : [Cours 02 — Installer Next.js et créer ton premier projet](./02_installation.md)
+- → Suivant : [Cours 04 — Les composants](./04_composants.md)
+- Sommaire : [README](../README.md)

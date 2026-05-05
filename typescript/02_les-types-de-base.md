@@ -125,5 +125,8 @@ Utile à connaître car tu le verras dans du code existant, mais évite de l'uti
 
 ---
 
-## Prochain cours :
-**[Cours TypeScript 03 — Les objets et le mot-clé `type`](./03_les-objets-et-type.md)**
+## Navigation
+
+- ← Précédent : [Cours TypeScript 01 — C'est quoi TypeScript ?](./01_cest-quoi-typescript.md)
+- → Suivant : [Cours TypeScript 03 — Les objets et le mot-clé `type`](./03_les-objets-et-type.md)
+- Sommaire : [README](../README.md)
