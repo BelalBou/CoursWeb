@@ -1,0 +1,28 @@
+# Private notes / agent memory
+/memory/
+
+# Editor settings
+/.vscode/
+
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+out/
+release/
+.next/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Environment files
+.env
+.env.*
+!.env.example

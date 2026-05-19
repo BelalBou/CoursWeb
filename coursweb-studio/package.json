@@ -1,0 +1,93 @@
+{
+  "name": "coursweb-studio",
+  "version": "0.1.0",
+  "description": "Application Windows pour lire le parcours CoursWeb dans une interface moderne.",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "electron": "node scripts/launch-electron.cjs",
+    "start": "concurrently -k \"npm:dev\" \"wait-on tcp:5174 && node scripts/launch-electron.cjs http://127.0.0.1:5174\"",
+    "build": "tsc -b && vite build",
+    "dist": "npm run build && cross-env CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder"
+  },
+  "keywords": [
+    "cours",
+    "electron",
+    "markdown",
+    "typescript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@vitejs/plugin-react": "^5.0.4",
+    "dompurify": "^3.2.7",
+    "highlight.js": "^11.11.1",
+    "lucide-react": "^0.468.0",
+    "marked": "^16.4.1",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
+  },
+  "devDependencies": {
+    "@types/dompurify": "^3.2.0",
+    "@types/node": "^22.10.2",
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
+    "concurrently": "^9.2.1",
+    "cross-env": "^10.0.0",
+    "electron": "^38.2.2",
+    "electron-builder": "^26.0.12",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.9",
+    "wait-on": "^8.0.4"
+  },
+  "build": {
+    "appId": "com.coursweb.studio",
+    "productName": "CoursWeb Studio",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "../nextjs",
+        "to": "course-content/nextjs"
+      },
+      {
+        "from": "../nestjs",
+        "to": "course-content/nestjs"
+      },
+      {
+        "from": "../prisma",
+        "to": "course-content/prisma"
+      },
+      {
+        "from": "../postgresql",
+        "to": "course-content/postgresql"
+      },
+      {
+        "from": "../linux",
+        "to": "course-content/linux"
+      },
+      {
+        "from": "../typescript",
+        "to": "course-content/typescript"
+      },
+      {
+        "from": "../README.md",
+        "to": "course-content/README.md"
+      }
+    ],
+    "win": {
+      "target": "nsis",
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}
