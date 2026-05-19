@@ -42,7 +42,9 @@ async function envoyerMessage(formData: FormData) {
 }
 ```
 
-Convention recommandée pour les vrais projets : créer un fichier `actions.ts` dédié, avec `"use server"` tout en haut. Toutes les exports de ce fichier sont alors des Server Actions.
+Convention recommandée pour les vrais projets : créer un fichier `actions.ts` dédié, avec `"use server"` tout en haut. Toutes les exports de valeur de ce fichier doivent être des Server Actions, donc des fonctions async.
+
+Important : dans un fichier `"use server"`, n'exporte pas de constante objet comme `ETAT_INITIAL`. Next.js refusera avec une erreur du type "A use server file can only export async functions". Les constantes partagées vont dans un fichier séparé sans `"use server"`.
 
 ---
 
@@ -156,9 +158,10 @@ const [etat, action, enCours] = useActionState(envoyerMessage, etatInitial);
 ## Application sur le portfolio
 
 On va faire :
-1. `app/contact/actions.ts` — la Server Action avec validation Zod.
-2. `lib/messages.ts` — un faux "stockage en mémoire" (le temps qu'on n'ait pas de base).
-3. `components/ContactForm.tsx` — refait avec `useActionState`.
+1. `app/contact/state.ts` — le type et l'état initial du formulaire.
+2. `app/contact/actions.ts` — la Server Action avec validation Zod.
+3. `lib/messages.ts` — un faux "stockage en mémoire" (le temps qu'on n'ait pas de base).
+4. `components/ContactForm.tsx` — refait avec `useActionState`.
 
 ### Étape 0 : installer Zod
 
@@ -203,21 +206,9 @@ Notes pédagogiques :
 - `readonly Message[]` empêche de modifier le tableau ailleurs. C'est plus sûr.
 - **Attention** : ce stockage en mémoire est temporaire. À chaque redémarrage du serveur, tout disparaît. On le remplacera par une vraie base de données quand on apprendra Prisma + PostgreSQL.
 
-### Étape 2 : `app/contact/actions.ts`
+### Étape 2 : `app/contact/state.ts`
 
 ```ts
-"use server";
-
-import { revalidatePath } from "next/cache";
-import { z } from "zod";
-import { ajouterMessage } from "@/lib/messages";
-
-const SchemaContact = z.object({
-  nom: z.string().trim().min(2, "Le nom doit avoir au moins 2 caractères"),
-  email: z.string().trim().email("Email invalide"),
-  message: z.string().trim().min(10, "Le message doit avoir au moins 10 caractères"),
-});
-
 export type EtatFormulaire = {
   ok: boolean;
   message: string;
@@ -232,6 +223,25 @@ export const ETAT_INITIAL: EtatFormulaire = {
   ok: false,
   message: "",
 };
+```
+
+On met ce fichier à part parce qu'il exporte un objet (`ETAT_INITIAL`). Un fichier `"use server"` ne peut pas exporter ce genre de valeur.
+
+### Étape 3 : `app/contact/actions.ts`
+
+```ts
+"use server";
+
+import { revalidatePath } from "next/cache";
+import { z } from "zod";
+import { ajouterMessage } from "@/lib/messages";
+import type { EtatFormulaire } from "./state";
+
+const SchemaContact = z.object({
+  nom: z.string().trim().min(2, "Le nom doit avoir au moins 2 caractères"),
+  email: z.string().trim().email("Email invalide"),
+  message: z.string().trim().min(10, "Le message doit avoir au moins 10 caractères"),
+});
 
 export async function envoyerMessage(
   _etatPrecedent: EtatFormulaire,
@@ -266,18 +276,20 @@ export async function envoyerMessage(
 Notes pédagogiques :
 - `"use server"` en haut : tout ce fichier est exécuté sur le serveur.
 - Le schéma Zod fait la validation **et** le typage. Si `safeParse` réussit, `resultat.data` est de type `{ nom: string; email: string; message: string }`.
-- `EtatFormulaire` est le type de ce que l'action renvoie. On l'exporte parce que le composant client en a besoin.
+- `EtatFormulaire` est importé depuis `state.ts`. Comme c'est un type, il disparaît au moment où TypeScript compile le code.
+- `actions.ts` n'exporte qu'une fonction async (`envoyerMessage`). C'est obligatoire dans un fichier `"use server"`.
 - `_etatPrecedent` : le `_` au début indique qu'on n'utilise pas ce paramètre. C'est juste là parce que `useActionState` l'exige.
 - `revalidatePath("/contact")` dit à Next.js : "rafraîchis le cache de cette page". Utile si la page affichait par exemple la liste des messages reçus.
 - On retourne un objet structuré que le client va savoir lire.
 
-### Étape 3 : `components/ContactForm.tsx` refait
+### Étape 4 : `components/ContactForm.tsx` refait
 
 ```tsx
 "use client";
 
 import { useActionState } from "react";
-import { envoyerMessage, ETAT_INITIAL } from "@/app/contact/actions";
+import { envoyerMessage } from "@/app/contact/actions";
+import { ETAT_INITIAL } from "@/app/contact/state";
 
 export default function ContactForm() {
   const [etat, action, enCours] = useActionState(envoyerMessage, ETAT_INITIAL);

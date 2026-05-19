@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { ajouterMessage } from "@/lib/messages";
+import type { EtatFormulaire } from "./state";
 
 const SchemaContact = z.object({
   nom: z.string().trim().min(2, "Le nom doit avoir au moins 2 caracteres"),
@@ -12,21 +13,6 @@ const SchemaContact = z.object({
     .trim()
     .min(10, "Le message doit avoir au moins 10 caracteres"),
 });
-
-export type EtatFormulaire = {
-  ok: boolean;
-  message: string;
-  erreurs?: {
-    nom?: string[];
-    email?: string[];
-    message?: string[];
-  };
-};
-
-export const ETAT_INITIAL: EtatFormulaire = {
-  ok: false,
-  message: "",
-};
 
 export async function envoyerMessage(
   _etatPrecedent: EtatFormulaire,

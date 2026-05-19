@@ -1,7 +1,8 @@
 "use client";
 
 import { useActionState } from "react";
-import { envoyerMessage, ETAT_INITIAL } from "@/app/contact/actions";
+import { envoyerMessage } from "@/app/contact/actions";
+import { ETAT_INITIAL } from "@/app/contact/state";
 
 export default function ContactForm() {
   const [etat, action, enCours] = useActionState(envoyerMessage, ETAT_INITIAL);
