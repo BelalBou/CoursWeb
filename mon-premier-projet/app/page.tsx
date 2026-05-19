@@ -28,7 +28,7 @@ export default function Home() {
           Developpeur web en formation. Je construis des projets avec Next.js,
           NestJS et bien plus.
         </p>
-        <Bouton texte="Me contacter" />
+        <Bouton texte="Me contacter" href="/contact" />
       </div>
     </main>
   );

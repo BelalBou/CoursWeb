@@ -1,6 +1,7 @@
 import { plainToInstance } from 'class-transformer';
 import {
   IsEnum,
+  IsOptional,
   Matches,
   IsNumber,
   IsString,
@@ -28,6 +29,29 @@ class EnvironmentVariables {
   @IsString()
   @Matches(/^postgresql:\/\/.+/)
   DATABASE_URL!: string;
+
+  @IsString()
+  ADMIN_TOKEN!: string;
+
+  @IsOptional()
+  @IsString()
+  SMTP_HOST?: string;
+
+  @IsOptional()
+  @IsNumber()
+  SMTP_PORT?: number;
+
+  @IsOptional()
+  @IsString()
+  SMTP_USER?: string;
+
+  @IsOptional()
+  @IsString()
+  SMTP_PASS?: string;
+
+  @IsOptional()
+  @IsString()
+  SMTP_FROM?: string;
 }
 
 export function validateEnv(

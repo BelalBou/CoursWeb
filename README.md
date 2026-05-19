@@ -91,6 +91,7 @@ On ajoute une vraie persistance dans NestJS avec Prisma, directement branché su
 | 06 | Prisma dans NestJS | [Lire](./04_prisma/06_prisma-dans-nestjs.md) |
 | 07 | Seed et données de test | [Lire](./04_prisma/07_seed-et-data-test.md) |
 | 08 | Bonnes pratiques | [Lire](./04_prisma/08_bonnes-pratiques.md) |
+| 09 | Admin, messages et SMTP | [Lire](./04_prisma/09_admin-messages-et-smtp.md) |
 
 ### 5. Linux — déployer en vrai
 

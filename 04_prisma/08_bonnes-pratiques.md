@@ -312,5 +312,5 @@ La prochaine grande étape, c'est **Linux** : comprendre le serveur sur lequel o
 ## Navigation
 
 - ← Précédent : [Cours 07 — Seed et données de test](./07_seed-et-data-test.md)
-- → Suivant : [Cours 01 Linux — C'est quoi Linux](../05_linux/01_cest-quoi-linux.md)
+- → Suivant : [Cours 09 — Admin, messages et SMTP](./09_admin-messages-et-smtp.md)
 - Sommaire : [README](../README.md)

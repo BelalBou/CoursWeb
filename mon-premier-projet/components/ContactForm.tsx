@@ -112,14 +112,18 @@ export default function ContactForm() {
         {statut === "envoi" ? "Envoi en cours..." : "Envoyer le message"}
       </button>
 
-      {messageRetour && (
-        <p
-          className={
-            statut === "ok" ? "text-sm text-green-600" : "text-sm text-red-600"
-          }
-        >
-          {messageRetour}
-        </p>
+      {messageRetour && statut === "ok" && (
+        <div className="rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-800">
+          <p className="font-semibold">Message envoye</p>
+          <p>{messageRetour}</p>
+        </div>
+      )}
+
+      {messageRetour && statut === "erreur" && (
+        <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+          <p className="font-semibold">Envoi impossible</p>
+          <p>{messageRetour}</p>
+        </div>
       )}
     </form>
   );
