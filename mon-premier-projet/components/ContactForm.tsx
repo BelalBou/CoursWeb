@@ -28,10 +28,11 @@ export default function ContactForm() {
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
+    const form = event.currentTarget;
     setStatut("envoi");
     setMessageRetour("");
 
-    const data = new FormData(event.currentTarget);
+    const data = new FormData(form);
     const payload = {
       nom: data.get("nom"),
       email: data.get("email"),
@@ -53,7 +54,7 @@ export default function ContactForm() {
         return;
       }
 
-      event.currentTarget.reset();
+      form.reset();
       setStatut("ok");
       setMessageRetour("Merci ! Ton message a bien ete envoye.");
     } catch {
