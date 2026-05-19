@@ -135,13 +135,15 @@ mon-premier-projet/
 Dans `Navbar.tsx`, écris ça :
 
 ```tsx
+import Link from "next/link"
+
 export default function Navbar() {
   return (
     <nav>
       <span>Mon Portfolio</span>
       <div>
-        <a href="/">Accueil</a>
-        <a href="/contact">Contact</a>
+        <Link href="/">Accueil</Link>
+        <Link href="/contact">Contact</Link>
       </div>
     </nav>
   )
@@ -150,12 +152,15 @@ export default function Navbar() {
 
 C'est un composant React classique : une fonction qui retourne du TSX.
 
+`Link` est le composant de Next.js pour naviguer vers une autre page du même site. Il ressemble à un lien HTML, mais Next.js peut préparer la page à l'avance et garder une navigation plus rapide.
+
 ### Étape 2 — L'utiliser dans le layout
 
 Maintenant dans `app/layout.tsx`, on importe la Navbar et on la place **au-dessus de `{children}`** :
 
 ```tsx
 import Navbar from "@/components/Navbar"
+import "./globals.css"
 
 export default function RootLayout({
   children,
@@ -165,8 +170,10 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body>
-        <Navbar />       ← affiché sur TOUTES les pages
-        {children}       ← contenu spécifique à chaque page
+        {/* affiché sur TOUTES les pages */}
+        <Navbar />
+        {/* contenu spécifique à chaque page */}
+        {children}
       </body>
     </html>
   )

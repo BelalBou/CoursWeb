@@ -286,7 +286,9 @@ export default function ContactPage() {
 
 ## Un mot sur le bouton
 
-Notre `Bouton` actuel est un Server Component qui affiche juste un `<button>`. Il fonctionne bien dans un `<form>` car par défaut, un `<button>` dans un `<form>` soumet le formulaire (`type="submit"` est implicite).
+Notre `Bouton` actuel affiche juste un `<button>`. Comme `ContactForm` est un Client Component et importe directement `Bouton`, ce bouton doit rester compatible avec le navigateur : pas de lecture de fichier, pas de secret serveur, pas de `process.env` sensible.
+
+Il fonctionne bien dans un `<form>` car par défaut, un `<button>` dans un `<form>` soumet le formulaire (`type="submit"` est implicite).
 
 Si on voulait un bouton qui fait autre chose (ouvrir une modale, par exemple), on devrait soit :
 - Lui ajouter une prop `onClick` (ce qui le forcerait à devenir Client).

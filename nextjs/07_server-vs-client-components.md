@@ -261,9 +261,9 @@ Pour chacun des fichiers ci-dessous, demande-toi : Server ou Client ?
 | `app/contact/page.tsx` (juste un titre + un sous-composant) | Server |
 | `components/ContactForm.tsx` (à venir, formulaire interactif) | Client |
 | `components/Navbar.tsx` (utilise `usePathname`) | Client |
-| `components/Bouton.tsx` (juste un `<button>` qui affiche un texte) | Server |
+| `components/Bouton.tsx` (juste un `<button>` qui affiche un texte) | Server s'il est utilisé depuis un Server Component ; compatible Client s'il est importé par un Client Component |
 
-Tant que `Bouton` ne fait pas de `onClick`, il peut rester Server. Le fait qu'il soit utilisé dans un Client Component ne le force pas à devenir Client.
+Tant que `Bouton` ne fait pas de `onClick`, il peut rester très simple. Mais attention à la frontière `"use client"` : si un Client Component importe directement `Bouton`, ce code devient aussi compatible avec le navigateur et part dans le bundle client. Ce n'est pas grave ici, car `Bouton` ne fait rien de secret ni de serveur.
 
 ---
 

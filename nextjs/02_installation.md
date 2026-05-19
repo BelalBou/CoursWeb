@@ -53,16 +53,24 @@ Next.js va te poser des questions. Voilà quoi répondre :
 ```
 Would you like to use TypeScript?         → Yes   ← on l'utilise toujours
 Would you like to use ESLint?             → Yes
-Would you like to use Tailwind CSS?       → No
+Would you like to use Tailwind CSS?       → Yes   ← on l'utilise au cours 05
 Would you like your code inside a `src/` directory? → No
 Would you like to use App Router?         → Yes   ← important !
 Would you like to use Turbopack?          → No
+Would you like to use React Compiler?     → No
+Would you like to create an AGENTS.md file? → Yes
 Would you like to customize the import alias? → No
 ```
 
 > **Pourquoi "Yes" à TypeScript ?** TypeScript, c'est JavaScript avec des règles de sécurité en plus. Imagine que JavaScript c'est conduire sans ceinture : ça marche, mais si tu fais une erreur tu t'en rends compte trop tard. TypeScript, c'est conduire avec la ceinture ET les airbags : il te prévient **avant** que ça plante. On va l'utiliser dans tous nos projets. Ne t'inquiète pas si tu ne comprends pas encore tout, on va l'expliquer au fur et à mesure.
 
 > **Pourquoi "Yes" à App Router ?** C'est la façon moderne de faire les pages avec Next.js. On va apprendre directement la bonne méthode.
+
+> **Pourquoi "Yes" à Tailwind CSS ?** Dans le cours 05, on va styliser le portfolio avec Tailwind. Si tu réponds "No" ici, les classes comme `bg-gray-50`, `text-xl` ou `flex` ne fonctionneront pas correctement. On l'active donc dès la création du projet pour éviter une installation en plus plus tard.
+
+> **Pourquoi "No" à React Compiler ?** C'est une optimisation récente de React. Pour apprendre, on garde le projet simple : React fonctionne très bien sans ça.
+
+> **Pourquoi "Yes" à AGENTS.md ?** Ce fichier donne des consignes aux assistants IA de développement. Il ne change pas le fonctionnement du site. Si tu travailles sans assistant IA, ce fichier peut simplement rester là sans t'inquiéter.
 
 ---
 

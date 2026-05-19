@@ -238,7 +238,7 @@ export default function ErrorPage({ error, reset }: ErrorPageProps) {
       <div className="max-w-md text-center">
         <p className="text-sm font-medium text-red-600 mb-2">Erreur</p>
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          On n'a pas pu charger les projets
+          On n&apos;a pas pu charger les projets
         </h1>
         <p className="text-gray-500 mb-2">
           Quelque chose a planté. Réessaie dans un instant.
@@ -274,8 +274,8 @@ export default function NotFound() {
           Projet introuvable
         </h1>
         <p className="text-gray-500 mb-6">
-          Ce projet n'existe pas (ou plus). Reviens à la liste pour en voir
-          d'autres.
+          Ce projet n&apos;existe pas (ou plus). Reviens à la liste pour en voir
+          d&apos;autres.
         </p>
         <Link
           href="/projets"
@@ -305,13 +305,13 @@ export default function NotFound() {
           Page introuvable
         </h1>
         <p className="text-gray-500 mb-6">
-          Cette page n'existe pas. Voici de quoi rebondir.
+          Cette page n&apos;existe pas. Voici de quoi rebondir.
         </p>
         <Link
           href="/"
           className="inline-block bg-gray-900 text-white px-6 py-3 rounded-lg font-medium hover:bg-gray-700"
         >
-          Retour à l'accueil
+          Retour à l&apos;accueil
         </Link>
       </div>
     </main>

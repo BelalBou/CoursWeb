@@ -278,6 +278,8 @@ export async function generateStaticParams() {
   return listerSlugs().map((slug) => ({ slug }));
 }
 
+export const dynamicParams = false;
+
 export default async function ProjetDetailPage({
   params,
 }: {
@@ -362,6 +364,7 @@ const LIENS: LienNav[] = [
 - La page est **async** (`export default async function`).
 - `notFound()` de `next/navigation` affiche une 404.
 - `generateStaticParams` permet de **pré-fabriquer** les pages au build pour la performance.
+- `dynamicParams = false` dit à Next.js de refuser les slugs qui ne sont pas dans `generateStaticParams`. Comme ça, `/projets/n-importe-quoi` renvoie une vraie 404.
 - On structure ses données dans `lib/...ts` avec un type, une constante et des fonctions d'accès. Ça facilite la migration vers une base de données.
 
 ---
