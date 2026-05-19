@@ -25,6 +25,14 @@ nest g controller projets
 nest g service projets
 ```
 
+Si tu utilises `npx` au lieu du CLI global, préfixe les commandes :
+
+```bash
+npx nest g module projets
+npx nest g controller projets
+npx nest g service projets
+```
+
 Tu vas voir apparaître un dossier `src/projets/` avec :
 
 ```
@@ -118,7 +126,7 @@ Ouvre `src/projets/projets.controller.ts` :
 ```typescript
 import { Controller, Get, Param } from '@nestjs/common';
 import { ProjetsService } from './projets.service';
-import { Projet } from './projet.entity';
+import type { Projet } from './projet.entity';
 
 @Controller('projets')
 export class ProjetsController {
@@ -155,6 +163,8 @@ On dit à NestJS : "récupère la partie `slug` de l'URL et donne-la moi en para
 ### Le controller ne fait que déléguer
 Regarde bien : pas de logique, pas de `if`, pas de `find`. Il appelle juste le service.
 **Le controller orchestre, le service travaille.** C'est la règle d'or.
+
+> **Pourquoi `import type` ?** Avec NestJS 11, TypeScript est plus strict quand un type apparaît dans une méthode qui utilise des décorateurs (`@Get`, `@Param`, etc.). `Projet` est seulement un type, pas une vraie valeur JavaScript. On l'importe donc avec `import type` pour éviter une erreur de build.
 
 ---
 

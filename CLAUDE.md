@@ -49,17 +49,20 @@ CoursWeb/
 ```
 
 ## Le projet fil rouge
-On construit un **portfolio personnel** tout au long des cours Next.js.
-À chaque nouveau concept appris, on l'applique directement dans ce projet.
-Le projet est dans `mon-premier-projet/`.
+On construit un **portfolio personnel** tout au long du parcours.
+À chaque nouveau concept appris, on l'applique directement dans les projets.
+Le frontend est dans `mon-premier-projet/`.
+Le backend est dans `mon-backend/`.
 
 Pages actuelles :
 - `/` — page d'accueil (hero)
 - `/contact` — formulaire de contact
+- `/projets` — liste des projets lue depuis NestJS
+- `/projets/[slug]` — détail d'un projet lu depuis NestJS
 
 ## Où on en est
-- [ ] Next.js — en cours
-- [ ] NestJS
+- [x] Next.js
+- [x] NestJS
 - [ ] Prisma
 - [ ] PostgreSQL
 - [ ] Linux

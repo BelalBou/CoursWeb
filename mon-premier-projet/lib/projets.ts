@@ -1,46 +1,37 @@
 export type Projet = {
-  id: string;
   slug: string;
   titre: string;
   description: string;
-  technos: readonly string[];
+  technologies: string[];
+  lien: string;
 };
 
-const PROJETS: readonly Projet[] = [
-  {
-    id: "1",
-    slug: "mon-portfolio",
-    titre: "Mon portfolio",
-    description:
-      "Le site que tu lis en ce moment. Construit avec Next.js, TypeScript et Tailwind CSS.",
-    technos: ["Next.js", "TypeScript", "Tailwind CSS"],
-  },
-  {
-    id: "2",
-    slug: "carnet-de-recettes",
-    titre: "Carnet de recettes",
-    description:
-      "Une petite app pour stocker mes recettes preferees. Avec recherche et categories.",
-    technos: ["Next.js", "Prisma", "PostgreSQL"],
-  },
-  {
-    id: "3",
-    slug: "tableau-de-bord",
-    titre: "Tableau de bord",
-    description:
-      "Un dashboard pour visualiser mes statistiques quotidiennes.",
-    technos: ["Next.js", "NestJS", "Chart.js"],
-  },
-];
+const API_URL = process.env.API_URL ?? "http://localhost:3001";
 
-export function listerProjets(): readonly Projet[] {
-  return PROJETS;
+export async function getProjets(): Promise<Projet[]> {
+  const response = await fetch(`${API_URL}/projets`, {
+    next: { revalidate: 60 },
+  });
+
+  if (!response.ok) {
+    throw new Error("Impossible de charger les projets");
+  }
+
+  return response.json() as Promise<Projet[]>;
 }
 
-export function trouverProjet(slug: string): Projet | undefined {
-  return PROJETS.find((projet) => projet.slug === slug);
-}
+export async function getProjetParSlug(slug: string): Promise<Projet | null> {
+  const response = await fetch(`${API_URL}/projets/${slug}`, {
+    next: { revalidate: 60 },
+  });
 
-export function listerSlugs(): readonly string[] {
-  return PROJETS.map((projet) => projet.slug);
+  if (response.status === 404) {
+    return null;
+  }
+
+  if (!response.ok) {
+    throw new Error("Erreur lors du chargement du projet");
+  }
+
+  return response.json() as Promise<Projet>;
 }

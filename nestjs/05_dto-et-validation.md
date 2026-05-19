@@ -94,6 +94,14 @@ nest g controller messages
 nest g service messages
 ```
 
+Avec `npx`, même principe :
+
+```bash
+npx nest g module messages
+npx nest g controller messages
+npx nest g service messages
+```
+
 ---
 
 ## Créer le DTO `CreateMessageDto`
@@ -191,7 +199,7 @@ Ouvre `src/messages/messages.controller.ts` :
 ```typescript
 import { Body, Controller, Get, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { CreateMessageDto } from './dto/create-message.dto';
-import { Message } from './message.entity';
+import type { Message } from './message.entity';
 import { MessagesService } from './messages.service';
 
 @Controller('messages')

@@ -1,14 +1,48 @@
 "use client";
 
-import { useActionState } from "react";
-import { envoyerMessage } from "@/app/contact/actions";
-import { ETAT_INITIAL } from "@/app/contact/state";
+import { useState } from "react";
+
+type Statut = "idle" | "envoi" | "ok" | "erreur";
 
 export default function ContactForm() {
-  const [etat, action, enCours] = useActionState(envoyerMessage, ETAT_INITIAL);
+  const [statut, setStatut] = useState<Statut>("idle");
+  const [messageRetour, setMessageRetour] = useState("");
+
+  async function onSubmit(event: React.FormEvent<HTMLFormElement>): Promise<void> {
+    event.preventDefault();
+    setStatut("envoi");
+    setMessageRetour("");
+
+    const data = new FormData(event.currentTarget);
+    const payload = {
+      nom: data.get("nom"),
+      email: data.get("email"),
+      message: data.get("message"),
+    };
+
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3001";
+      const response = await fetch(`${apiUrl}/messages`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error("Echec envoi");
+      }
+
+      event.currentTarget.reset();
+      setStatut("ok");
+      setMessageRetour("Merci ! Ton message a bien ete envoye.");
+    } catch {
+      setStatut("erreur");
+      setMessageRetour("Impossible d'envoyer le message pour le moment.");
+    }
+  }
 
   return (
-    <form className="flex flex-col gap-4" action={action}>
+    <form className="flex flex-col gap-4" onSubmit={onSubmit}>
       <div className="flex flex-col gap-1">
         <label htmlFor="nom" className="text-sm font-medium text-gray-700">
           Nom
@@ -20,9 +54,6 @@ export default function ContactForm() {
           placeholder="Ton nom"
           className="border border-gray-300 rounded-lg px-4 py-2 text-gray-900 outline-none focus:border-gray-900"
         />
-        {etat.erreurs?.nom && (
-          <p className="text-sm text-red-600">{etat.erreurs.nom[0]}</p>
-        )}
       </div>
 
       <div className="flex flex-col gap-1">
@@ -36,9 +67,6 @@ export default function ContactForm() {
           placeholder="ton@email.com"
           className="border border-gray-300 rounded-lg px-4 py-2 text-gray-900 outline-none focus:border-gray-900"
         />
-        {etat.erreurs?.email && (
-          <p className="text-sm text-red-600">{etat.erreurs.email[0]}</p>
-        )}
       </div>
 
       <div className="flex flex-col gap-1">
@@ -52,26 +80,23 @@ export default function ContactForm() {
           placeholder="Ton message..."
           className="border border-gray-300 rounded-lg px-4 py-2 text-gray-900 outline-none focus:border-gray-900 resize-none"
         />
-        {etat.erreurs?.message && (
-          <p className="text-sm text-red-600">{etat.erreurs.message[0]}</p>
-        )}
       </div>
 
       <button
         type="submit"
-        disabled={enCours}
+        disabled={statut === "envoi"}
         className="bg-gray-900 text-white px-6 py-3 rounded-lg font-medium hover:bg-gray-700 disabled:opacity-50"
       >
-        {enCours ? "Envoi en cours..." : "Envoyer le message"}
+        {statut === "envoi" ? "Envoi en cours..." : "Envoyer le message"}
       </button>
 
-      {etat.message && (
+      {messageRetour && (
         <p
           className={
-            etat.ok ? "text-sm text-green-600" : "text-sm text-red-600"
+            statut === "ok" ? "text-sm text-green-600" : "text-sm text-red-600"
           }
         >
-          {etat.message}
+          {messageRetour}
         </p>
       )}
     </form>

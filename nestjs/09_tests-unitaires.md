@@ -186,13 +186,13 @@ describe('ProjetsController', () => {
 
   it('GET /projets renvoie la liste', () => {
     expect(controller.trouverTous()).toEqual(projetsFictifs);
-    expect(service.trouverTous).toHaveBeenCalledTimes(1);
+    expect(service.trouverTous.mock.calls).toHaveLength(1);
   });
 
   it('GET /projets/:slug renvoie le projet et appelle le service avec le bon slug', () => {
     const projet = controller.trouverParSlug('demo');
     expect(projet.slug).toBe('demo');
-    expect(service.trouverParSlug).toHaveBeenCalledWith('demo');
+    expect(service.trouverParSlug.mock.calls[0]).toEqual(['demo']);
   });
 });
 ```
@@ -209,8 +209,8 @@ On dit à NestJS : "quand quelqu'un demande `ProjetsService`, donne-lui **ça** 
 
 C'est **ça** la magie de l'injection de dépendances : on échange une vraie classe contre une fausse sans toucher au controller.
 
-### `toHaveBeenCalledTimes(1)`, `toHaveBeenCalledWith('demo')`
-On vérifie que le controller a bien appelé le service, **comme il fallait**. Pas n'importe comment, pas trop de fois.
+### `mock.calls`
+On vérifie que le controller a bien appelé le service, **comme il fallait**. `mock.calls` contient la liste des appels reçus par la fonction mockée. Avec ESLint strict, cette forme évite aussi l'erreur `unbound-method`.
 
 ---
 

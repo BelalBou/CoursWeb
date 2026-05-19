@@ -132,7 +132,7 @@ TypeScript est utilisé partout dans le cours. Si tu veux comprendre un concept 
 - **Cours Prisma + PostgreSQL** → on remplace les données en dur par une vraie base.
 - **Cours Linux** → on met le tout en ligne sur un VPS, avec nginx et HTTPS.
 
-Le code du frontend est dans le dossier `mon-premier-projet/` (Next.js, déjà initialisé jusqu'au cours 5). Le backend `mon-backend/` sera créé pendant le cours NestJS.
+Le code du frontend est dans le dossier `mon-premier-projet/` (Next.js). Le backend est dans `mon-backend/` (NestJS). À ce stade, le frontend lit les projets depuis le backend et le formulaire de contact envoie ses messages vers `POST /messages`.
 
 ## Conventions d'écriture du cours
 

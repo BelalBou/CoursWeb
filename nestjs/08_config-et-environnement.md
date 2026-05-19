@@ -31,12 +31,13 @@ C'est un fichier texte simple : `CLE=valeur`, une par ligne.
 
 **Règle d'or** : `.env` ne se commit **jamais** dans Git. Il peut contenir des secrets (mots de passe de base, clés d'API, etc.).
 
-Ajoute-le à `.gitignore` (NestJS l'a fait par défaut, mais vérifie) :
+Ajoute-le à `.gitignore`. Selon la version du CLI, NestJS ne crée pas toujours ce fichier automatiquement, donc vérifie vraiment :
 
 ```
 .env
 .env.local
 *.env
+!.env.example
 ```
 
 ---

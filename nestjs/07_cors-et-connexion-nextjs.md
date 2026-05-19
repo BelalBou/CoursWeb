@@ -93,6 +93,8 @@ Si tu vois la liste des projets, **bingo, CORS est OK**. Si tu vois une erreur r
 
 Tu te souviens du fichier `lib/projets.ts` dans `mon-premier-projet/`, qui contenait le tableau de projets en dur ? On le remplace par un appel au backend.
 
+À partir de ce moment, `mon-premier-projet` dépend du backend pour afficher `/projets`. Les pages projets ne sont donc plus préfabriquées au build comme dans le cours Next.js 10 : elles deviennent **dynamiques** et lisent NestJS au moment de la requête.
+
 Avant :
 
 ```typescript
@@ -146,6 +148,45 @@ export async function getProjetParSlug(slug: string): Promise<Projet | null> {
 }
 ```
 
+Dans `app/projets/page.tsx`, remplace `listerProjets()` par `await getProjets()` et rends la page `async` :
+
+```tsx
+import { getProjets } from '@/lib/projets';
+
+export const dynamic = 'force-dynamic';
+
+export default async function ProjetsPage() {
+  const projets = await getProjets();
+  // ... le JSX reste presque identique
+}
+```
+
+Dans `app/projets/[slug]/page.tsx`, remplace `trouverProjet(slug)` par `await getProjetParSlug(slug)`. Supprime aussi `generateStaticParams` et `dynamicParams = false`, car les slugs viennent maintenant du backend :
+
+```tsx
+import { notFound } from 'next/navigation';
+import { getProjetParSlug } from '@/lib/projets';
+
+export const dynamic = 'force-dynamic';
+
+export default async function ProjetDetailPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const projet = await getProjetParSlug(slug);
+
+  if (!projet) {
+    notFound();
+  }
+
+  // ... JSX
+}
+```
+
+Dans le JSX, pense aussi à utiliser `projet.technologies` au lieu de l'ancien champ local `projet.technos`.
+
 Quelques points importants :
 
 ### `process.env.API_URL`
@@ -189,6 +230,8 @@ Le composant est **`async`**. Next.js attend que le fetch soit fini, génère la
 ## Côté Next.js : envoyer le formulaire de contact
 
 Ton formulaire de contact doit maintenant **vraiment** envoyer les données au backend.
+
+Si tu avais encore la Server Action Next.js du cours 09 (`app/contact/actions.ts`) ou l'ancien stockage local `lib/messages.ts`, ils ne sont plus nécessaires pour ce flux. Le formulaire envoie maintenant directement vers NestJS.
 
 Dans le composant client de la page `/contact`, le `onSubmit` fait :
 
@@ -275,6 +318,7 @@ NEXT_PUBLIC_API_URL=http://localhost:3001
 Tu as :
 - Activé `enableCors` dans `main.ts` du backend, en autorisant `http://localhost:3000`.
 - Remplacé le tableau en dur de `lib/projets.ts` par des fetchs sur `http://localhost:3001/projets`.
+- Rendu les pages `/projets` dynamiques côté Next.js, parce que les données viennent maintenant du backend.
 - Modifié le formulaire de contact pour faire un `POST` sur `/messages`.
 - Créé un `.env.local` avec `API_URL` et `NEXT_PUBLIC_API_URL`.
 

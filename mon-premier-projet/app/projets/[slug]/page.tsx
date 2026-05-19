@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { listerSlugs, trouverProjet } from "@/lib/projets";
+import { getProjetParSlug } from "@/lib/projets";
+
+export const dynamic = "force-dynamic";
 
 export async function generateMetadata({
   params,
@@ -9,7 +11,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const projet = trouverProjet(slug);
+  const projet = await getProjetParSlug(slug);
 
   if (!projet) {
     return {
@@ -28,19 +30,13 @@ export async function generateMetadata({
   };
 }
 
-export async function generateStaticParams() {
-  return listerSlugs().map((slug) => ({ slug }));
-}
-
-export const dynamicParams = false;
-
 export default async function ProjetDetailPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const projet = trouverProjet(slug);
+  const projet = await getProjetParSlug(slug);
 
   if (!projet) {
     notFound();
@@ -62,7 +58,7 @@ export default async function ProjetDetailPage({
         <p className="text-lg text-gray-600 mb-6">{projet.description}</p>
 
         <div className="flex flex-wrap gap-2">
-          {projet.technos.map((tech) => (
+          {projet.technologies.map((tech) => (
             <span
               key={tech}
               className="text-sm bg-white border border-gray-200 text-gray-700 px-3 py-1 rounded-full"

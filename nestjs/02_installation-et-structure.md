@@ -23,7 +23,15 @@ Pour vérifier que c'est installé :
 nest --version
 ```
 
-Tu dois voir un numéro (par exemple `10.x.x`).
+Tu dois voir un numéro (par exemple `11.x.x`).
+
+> **Option sans installation globale :** si tu ne veux pas installer `nest` sur toute ta machine, tu peux utiliser `npx`. Dans ce cas, la commande de création devient :
+>
+> ```bash
+> npx @nestjs/cli new mon-backend --package-manager npm --skip-git
+> ```
+>
+> `npx` télécharge et lance le CLI juste pour cette commande.
 
 ---
 
