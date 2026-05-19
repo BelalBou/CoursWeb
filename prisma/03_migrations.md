@@ -39,7 +39,7 @@ Que se passe-t-il pendant cette commande ?
 1. Prisma compare ton `schema.prisma` à l'état actuel de la base.
 2. Il en déduit le SQL nécessaire pour passer de l'un à l'autre.
 3. Il **crée un fichier de migration** (du SQL pur) dans `prisma/migrations/`.
-4. Il **applique** ce SQL à la base. Le fichier `dev.db` est créé pour de vrai.
+4. Il **applique** ce SQL à PostgreSQL, dans la base `portfolio`.
 5. Il **régénère** le client Prisma (`@prisma/client`) avec les nouveaux types.
 
 Tu vois maintenant :
@@ -48,7 +48,6 @@ Tu vois maintenant :
 mon-backend/
 ├── prisma/
 │   ├── schema.prisma
-│   ├── dev.db                              ← ta base SQLite (un vrai fichier !)
 │   └── migrations/
 │       ├── migration_lock.toml
 │       └── 20260505123000_init/
@@ -61,13 +60,16 @@ Ouvre `prisma/migrations/20260505123000_init/migration.sql` (le timestamp sera d
 
 ```sql
 CREATE TABLE "projets" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "id" SERIAL NOT NULL,
     "slug" TEXT NOT NULL,
     "titre" TEXT NOT NULL,
     "description" TEXT NOT NULL,
-    "technos" TEXT NOT NULL,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL
+    "lien" TEXT NOT NULL,
+    "est_publie" BOOLEAN NOT NULL DEFAULT true,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "projets_pkey" PRIMARY KEY ("id")
 );
 
 CREATE UNIQUE INDEX "projets_slug_key" ON "projets"("slug");
@@ -89,7 +91,8 @@ model Projet {
   slug        String   @unique
   titre       String
   description String
-  technos     String
+  lien        String
+  estPublie   Boolean @default(true) @map("est_publie")
   imageUrl    String?  // <-- nouveau champ optionnel
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -168,8 +171,8 @@ npx prisma migrate reset
 
 Cette commande :
 
-1. **Supprime** la base (le fichier `dev.db` pour SQLite).
-2. La **recrée** vide.
+1. **Vide** la base de développement.
+2. La **recrée** avec la bonne structure.
 3. **Rejoue toutes les migrations** dans l'ordre.
 4. Lance le **seed** s'il y en a un (cours 7).
 
@@ -198,10 +201,9 @@ Dans `mon-backend/` :
    ```bash
    npx prisma migrate dev --name init
    ```
-3. Vérifie que `prisma/dev.db` est apparu.
-4. Lance `npx prisma studio`. Vérifie que la table `projets` existe (vide pour l'instant).
-5. Ajoute `prisma/dev.db` et `prisma/dev.db-journal` à ton `.gitignore` (la base SQLite locale, on ne la commit pas).
-6. Commit : `git add prisma/ && git commit -m "feat: init prisma schema and first migration"`.
+3. Vérifie que `prisma/migrations/.../migration.sql` est apparu.
+4. Lance `npx prisma studio`. Vérifie que les tables `projets`, `technologies`, `projets_technologies` et `messages` existent.
+5. Commit : `git add prisma/ && git commit -m "feat: init prisma postgres schema"`.
 
 ## Résumé
 - Une **migration** = un instantané daté du schéma sous forme de SQL.

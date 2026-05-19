@@ -1,6 +1,7 @@
 import { plainToInstance } from 'class-transformer';
 import {
   IsEnum,
+  Matches,
   IsNumber,
   IsString,
   IsUrl,
@@ -23,6 +24,10 @@ class EnvironmentVariables {
   @IsString()
   @IsUrl({ require_tld: false })
   FRONTEND_URL!: string;
+
+  @IsString()
+  @Matches(/^postgresql:\/\/.+/)
+  DATABASE_URL!: string;
 }
 
 export function validateEnv(

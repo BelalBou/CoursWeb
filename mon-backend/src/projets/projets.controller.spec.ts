@@ -19,8 +19,8 @@ describe('ProjetsController', () => {
 
   beforeEach(async () => {
     const mockService: Partial<jest.Mocked<ProjetsService>> = {
-      trouverTous: jest.fn().mockReturnValue(projetsFictifs),
-      trouverParSlug: jest.fn().mockReturnValue(projetsFictifs[0]),
+      trouverTous: jest.fn().mockResolvedValue(projetsFictifs),
+      trouverParSlug: jest.fn().mockResolvedValue(projetsFictifs[0]),
     };
 
     const module: TestingModule = await Test.createTestingModule({
@@ -32,13 +32,13 @@ describe('ProjetsController', () => {
     service = module.get(ProjetsService);
   });
 
-  it('GET /projets renvoie la liste', () => {
-    expect(controller.trouverTous()).toEqual(projetsFictifs);
+  it('GET /projets renvoie la liste', async () => {
+    await expect(controller.trouverTous()).resolves.toEqual(projetsFictifs);
     expect(service.trouverTous.mock.calls).toHaveLength(1);
   });
 
-  it('GET /projets/:slug renvoie le projet et appelle le service avec le bon slug', () => {
-    const projet = controller.trouverParSlug('demo');
+  it('GET /projets/:slug renvoie le projet et appelle le service avec le bon slug', async () => {
+    const projet = await controller.trouverParSlug('demo');
 
     expect(projet.slug).toBe('demo');
     expect(service.trouverParSlug.mock.calls[0]).toEqual(['demo']);

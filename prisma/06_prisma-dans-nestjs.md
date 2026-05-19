@@ -263,22 +263,20 @@ Bonne pratique : **mapper** vers un DTO de réponse.
 ```ts
 // src/projets/dto/projet-response.dto.ts
 export class ProjetResponseDto {
-  id!: number;
   slug!: string;
   titre!: string;
   description!: string;
-  technos!: string[];
-  createdAt!: string;
+  lien!: string;
+  technologies!: string[];
 }
 
-export function toProjetResponse(projet: Projet): ProjetResponseDto {
+export function toProjetResponse(projet: ProjetAvecTechnologies): ProjetResponseDto {
   return {
-    id: projet.id,
     slug: projet.slug,
     titre: projet.titre,
     description: projet.description,
-    technos: projet.technos.split(","),  // string -> string[]
-    createdAt: projet.createdAt.toISOString(),
+    lien: projet.lien,
+    technologies: projet.technologies.map(({ technologie }) => technologie.nom),
   };
 }
 ```
@@ -316,8 +314,8 @@ export class CreateProjetDto {
   @IsString()
   description!: string;
 
-  @IsString()
-  technos!: string;
+  @IsString({ each: true })
+  technologies!: string[];
 }
 ```
 

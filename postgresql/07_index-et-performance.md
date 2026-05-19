@@ -233,7 +233,7 @@ SELECT * FROM projets WHERE titre = 'Projet 87654';
 
 Tu vois `Index Scan using idx_projets_titre`, et un temps en **microsecondes**. Souvent un facteur 100 ou 1000.
 
-> Prisma crée automatiquement les index sur les clés primaires. Pour les **clés étrangères** et les colonnes filtrées, c'est à toi de les ajouter dans `schema.prisma` avec `@@index([col])` ou `@unique`. On le verra au cours 08.
+> Prisma crée automatiquement les index sur les clés primaires. Pour les **clés étrangères** et les colonnes filtrées, c'est à toi de les ajouter dans `schema.prisma` avec `@@index([col])` ou `@unique`. On le verra dans le bloc Prisma.
 
 ---
 

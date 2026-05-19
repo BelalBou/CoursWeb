@@ -37,11 +37,12 @@ model Projet {
   slug        String   @unique
   titre       String
   description String
-  technos     String
+  lien        String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  images      Image[]   // <-- la relation côté Projet
+  images       Image[]                // <-- la relation côté Projet
+  technologies ProjetTechnologie[]    // <-- relation plusieurs-à-plusieurs explicite
 
   @@map("projets")
 }
@@ -127,20 +128,19 @@ Note bien : pas de `@relation` à écrire. Pas de `projetId`, pas de `technoId`.
 Si tu veux **stocker des infos sur la relation elle-même** (ex. "depuis quand le projet utilise cette techno", ou un ordre d'affichage), tu fais une vraie table de liaison :
 
 ```prisma
-model ProjetTechno {
-  projetId Int
-  technoId Int
-  ordre    Int
+model ProjetTechnologie {
+  projetId      Int @map("projet_id")
+  technologieId Int @map("technologie_id")
 
-  projet Projet @relation(fields: [projetId], references: [id], onDelete: Cascade)
-  techno Techno @relation(fields: [technoId], references: [id], onDelete: Cascade)
+  projet      Projet      @relation(fields: [projetId], references: [id], onDelete: Cascade)
+  technologie Technologie @relation(fields: [technologieId], references: [id], onDelete: Cascade)
 
-  @@id([projetId, technoId])  // clé primaire composée
-  @@map("projets_technos")
+  @@id([projetId, technologieId])  // clé primaire composée
+  @@map("projets_technologies")
 }
 ```
 
-Pour notre portfolio, la version implicite suffit largement. (Et comme on est en SQLite et qu'on stocke pour l'instant `technos String`, on va faire le refactor plus tard. Tu peux laisser `technos String` pour ce cours et faire la vraie relation au cours suivant si tu veux.)
+Pour notre portfolio, on utilise la version explicite `ProjetTechnologie`, parce qu'on a déjà créé cette table dans le bloc PostgreSQL. C'est plus pédagogique : tu vois clairement la table de liaison côté SQL et côté Prisma.
 
 ## One-to-one (un à un)
 

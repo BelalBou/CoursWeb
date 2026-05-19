@@ -258,7 +258,7 @@ ALTER TABLE projets
 ADD CONSTRAINT note_valide CHECK (note BETWEEN 0 AND 5);
 ```
 
-> **Important** : en prod, on ne fait **jamais** de `ALTER TABLE` à la main. On passe par des **migrations** (Prisma le fait pour toi). On en reparle au cours 08.
+> **Important** : en prod, on ne fait **jamais** de `ALTER TABLE` à la main. On passe par des **migrations** (Prisma le fera pour toi). On en reparle dans le bloc Prisma.
 
 ---
 
@@ -306,7 +306,7 @@ Vérifie :
 
 Tu devrais voir ta nouvelle table et sa structure.
 
-> Au cours 08, on supprimera tout ça pour laisser Prisma gérer. Là, c'est juste pour pratiquer le SQL.
+> Dans le bloc Prisma, on laissera les migrations gérer cette structure. Là, c'est juste pour pratiquer le SQL et comprendre ce que Prisma générera ensuite.
 
 ---
 

@@ -6,8 +6,8 @@
 - **Sauvegarder** et **restaurer** une base : `pg_dump` / `pg_restore`
 - Les **variables d'environnement** : ne **jamais** mettre un mot de passe dans le code
 - La **connexion sécurisée** (SSL en prod)
-- **Bascule du projet** : Prisma SQLite → PostgreSQL
-- Préview Linux : on déploiera bientôt sur un vrai serveur
+- Préparer la connexion du backend à PostgreSQL avec Prisma
+- Prochaine étape : brancher NestJS à PostgreSQL avec Prisma
 
 ---
 
@@ -114,7 +114,7 @@ Dans ton projet `mon-backend/`, à la racine :
 **`.env`** (ne pas committer) :
 
 ```
-DATABASE_URL="postgresql://cours:secret@localhost:5432/portfolio"
+DATABASE_URL="postgresql://cours:secret@localhost:5433/portfolio"
 ```
 
 **`.env.example`** (à committer, sans la vraie valeur) :
@@ -157,7 +157,7 @@ Les hébergeurs sérieux (Neon, Supabase, Railway, AWS RDS, etc.) imposent SSL p
 
 ## Migrations : versionner le schéma
 
-Quand on était sur SQLite avec Prisma, tu lançais `npx prisma migrate dev`. Ça créait un dossier `prisma/migrations/` avec un fichier `.sql` par changement de schéma.
+Quand on sera dans le bloc Prisma, tu lanceras `npx prisma migrate dev`. Ça créera un dossier `prisma/migrations/` avec un fichier `.sql` par changement de schéma.
 
 C'est l'**historique** de ta base, comme Git pour ton code. Chaque équipier peut rejouer ces migrations dans l'ordre pour avoir la bonne structure.
 
@@ -165,9 +165,9 @@ C'est l'**historique** de ta base, comme Git pour ton code. Chaque équipier peu
 
 ---
 
-## Bascule du projet : SQLite → PostgreSQL
+## Préparer le projet pour Prisma + PostgreSQL
 
-C'est le moment qu'on attendait. Tu vas passer ton backend Prisma de SQLite à PostgreSQL.
+C'est le moment de préparer le terrain : PostgreSQL tourne, la base `portfolio` existe, et le bloc suivant branchera Prisma dessus.
 
 ### Étape 1 : vérifier que Postgres tourne
 
@@ -181,20 +181,9 @@ Tu dois voir `postgres-cours`. Sinon :
 docker start postgres-cours
 ```
 
-### Étape 2 : modifier `schema.prisma`
+### Étape 2 : garder l'URL sous la main
 
-Dans `mon-backend/prisma/schema.prisma`, change le `datasource` :
-
-**Avant** (SQLite) :
-
-```prisma
-datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
-}
-```
-
-**Après** (PostgreSQL) :
+Dans le bloc Prisma, le `schema.prisma` utilisera directement PostgreSQL :
 
 ```prisma
 datasource db {
@@ -203,35 +192,15 @@ datasource db {
 }
 ```
 
-C'est tout : un seul mot à changer.
-
 ### Étape 3 : modifier le `.env`
 
 Dans `mon-backend/.env` :
 
-**Avant** :
-
 ```
-DATABASE_URL="file:./dev.db"
+DATABASE_URL="postgresql://cours:secret@localhost:5433/portfolio"
 ```
 
-**Après** :
-
-```
-DATABASE_URL="postgresql://cours:secret@localhost:5432/portfolio"
-```
-
-### Étape 4 : nettoyer l'ancien historique de migrations
-
-Comme on change de SGBD, l'historique SQLite n'est plus valide. Pour cet apprentissage, le plus simple :
-
-```bash
-rm -rf prisma/migrations
-```
-
-> En vrai projet, on **ne supprime jamais** les migrations comme ça. On change de SGBD avec une stratégie complète (export, import, migrations dédiées). Ici, on apprend, donc on simplifie.
-
-### Étape 5 : (optionnel) repartir d'une base propre
+### Étape 4 : (optionnel) repartir d'une base propre
 
 Pour cet exercice, on enlève les tables qu'on a créées à la main :
 
@@ -241,15 +210,18 @@ docker exec -it postgres-cours psql -U cours -d portfolio
 
 ```sql
 DROP TABLE IF EXISTS projets_tags;
+DROP TABLE IF EXISTS projets_technologies;
+DROP TABLE IF EXISTS technologies;
+DROP TABLE IF EXISTS messages;
 DROP TABLE IF EXISTS tags;
 DROP TABLE IF EXISTS projets;
 \q
 ```
 
-### Étape 6 : créer la première migration Postgres
+### Étape 5 : créer la première migration Prisma
 
 ```bash
-npx prisma migrate dev --name passage_postgres
+npx prisma migrate dev --name init_postgres
 ```
 
 Prisma :
@@ -259,7 +231,7 @@ Prisma :
 3. Crée toutes les tables (avec les bons types Postgres).
 4. Génère le client Prisma TypeScript.
 
-### Étape 7 : vérifier
+### Étape 6 : vérifier
 
 Lance ton backend :
 
@@ -275,7 +247,7 @@ Tu peux aussi vérifier dans `psql` que les tables sont là :
 docker exec -it postgres-cours psql -U cours -d portfolio -c "\dt"
 ```
 
-### Quelques différences SQLite → Postgres à connaître
+### Quelques différences SQLite / Postgres à connaître
 
 | Sujet | SQLite | PostgreSQL |
 |---|---|---|
@@ -304,7 +276,7 @@ Tu peux mettre cette liste en favori. C'est exactement ce qu'on attend dans une 
 
 ---
 
-## Et après ? Préview Linux
+## Et après ? Prisma
 
 Maintenant tu sais :
 
@@ -313,9 +285,9 @@ Maintenant tu sais :
 - Comment écrire du SQL.
 - Comment relier des tables.
 - Comment optimiser avec des index.
-- Comment passer ton projet en Postgres.
+- Comment préparer ton projet pour Postgres.
 
-L'étape suivante : **déployer tout ça sur un vrai serveur**. Pour ça, il faut comprendre **Linux** : où vivent les fichiers, comment lancer un service en arrière-plan, comment ouvrir un port, comment installer Postgres et Node sur une machine distante.
+L'étape suivante : **Prisma**. On va garder PostgreSQL comme vraie base, mais arrêter d'écrire toutes les requêtes SQL à la main dans le backend. Prisma fera le pont entre NestJS, TypeScript et Postgres.
 
 C'est le sujet du module suivant.
 
@@ -326,10 +298,10 @@ C'est le sujet du module suivant.
 À ce stade, ton projet doit :
 
 1. Avoir un **conteneur Postgres** qui tourne (`docker ps` le confirme).
-2. Avoir un `schema.prisma` avec `provider = "postgresql"`.
-3. Avoir une `DATABASE_URL` en `.env` qui pointe sur Postgres.
-4. Avoir une migration `passage_postgres` créée.
-5. Démarrer normalement avec `npm run start:dev`.
+2. Avoir une base `portfolio` accessible avec l'utilisateur `cours`.
+3. Avoir testé les tables `projets`, `technologies`, `projets_technologies` et `messages`.
+4. Avoir compris la `DATABASE_URL` qu'on donnera à Prisma juste après.
+5. Avoir encore un backend NestJS qui démarre normalement.
 
 Si une de ces étapes échoue : relis le message d'erreur, vérifie ton URL, vérifie que Docker tourne. C'est presque toujours une virgule, un mot de passe ou un port.
 
@@ -341,8 +313,8 @@ Si une de ces étapes échoue : relis le message d'erreur, vérifie ton URL, vé
 - **`pg_dump`** sauvegarde, **`psql` ou `pg_restore`** restaurent. Sauvegarde = test de restauration.
 - **Mot de passe** dans `.env`, jamais dans le code. `.env.example` à committer, `.env` au `.gitignore`.
 - **SSL en prod** : `?sslmode=require`.
-- Bascule SQLite → Postgres : changer `provider` dans `schema.prisma`, ajuster `DATABASE_URL`, `npx prisma migrate dev`.
-- Préview : on apprend Linux pour déployer tout ça sur un vrai serveur.
+- Prisma utilisera directement Postgres : `provider = "postgresql"`, `DATABASE_URL`, puis `npx prisma migrate dev`.
+- Ensuite seulement, on apprendra Linux pour déployer tout ça sur un vrai serveur.
 
 ---
 
@@ -354,5 +326,5 @@ Si une de ces étapes échoue : relis le message d'erreur, vérifie ton URL, vé
 ## Navigation
 
 - ← Précédent : [Cours 07 — Index et performance](./07_index-et-performance.md)
-- → Suivant : [Cours 01 — C'est quoi Linux](../linux/01_cest-quoi-linux.md)
+- → Suivant : [Cours 01 Prisma — C'est quoi un ORM ?](../prisma/01_cest-quoi-un-orm.md)
 - Sommaire : [README](../README.md)

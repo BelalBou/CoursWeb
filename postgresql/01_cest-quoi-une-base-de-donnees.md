@@ -151,13 +151,13 @@ Pour 95 % des projets web (et tous les tiens pour l'instant), une base **relatio
 
 ## Application sur le projet
 
-Pour l'instant, ton projet `mon-backend` utilise **Prisma avec SQLite**. SQLite, c'est déjà une base relationnelle, mais minuscule (un simple fichier `.db`). C'est parfait pour apprendre, pas pour la production.
+Pour l'instant, ton projet `mon-backend` garde encore les projets et les messages dans des **tableaux en mémoire**. Ça marche pour apprendre NestJS, mais dès que le serveur redémarre, les données ajoutées disparaissent.
 
 Dans les prochains cours :
 
 1. On installe **PostgreSQL** (cours 03).
-2. On apprend SQL "à la main" pour bien comprendre ce que Prisma fait pour toi (cours 04 à 07).
-3. Au **cours 08**, on bascule Prisma de SQLite à PostgreSQL : ton backend tournera sur une vraie base.
+2. On apprend SQL "à la main" en créant les tables du portfolio (cours 04 à 07).
+3. Ensuite, dans le cours Prisma, on branchera NestJS sur cette base PostgreSQL avec un ORM propre et typé.
 
 ---
 
@@ -180,6 +180,6 @@ Dans les prochains cours :
 
 ## Navigation
 
-- ← Précédent : [Cours 08 — Bonnes pratiques Prisma](../prisma/08_bonnes-pratiques.md)
+- ← Précédent : [Cours 10 NestJS — S'organiser pour grandir](../nestjs/10_organisation-pour-grandir.md)
 - → Suivant : [Cours 02 — C'est quoi PostgreSQL](./02_cest-quoi-postgresql.md)
 - Sommaire : [README](../README.md)

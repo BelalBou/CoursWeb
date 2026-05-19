@@ -16,12 +16,12 @@ export class MessagesController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  creer(@Body() dto: CreateMessageDto): Message {
+  creer(@Body() dto: CreateMessageDto): Promise<Message> {
     return this.messagesService.creer(dto);
   }
 
   @Get()
-  trouverTous(): Message[] {
+  trouverTous(): Promise<Message[]> {
     return this.messagesService.trouverTous();
   }
 }

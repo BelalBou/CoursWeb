@@ -45,7 +45,19 @@ async function main(): Promise<void> {
       slug: "mon-portfolio",
       titre: "Mon portfolio",
       description: "Mon premier vrai projet",
-      technos: "nextjs,nestjs,prisma",
+      lien: "https://exemple.com/portfolio",
+      technologies: {
+        create: [
+          {
+            technologie: {
+              connectOrCreate: {
+                where: { nom: "Next.js" },
+                create: { nom: "Next.js" },
+              },
+            },
+          },
+        ],
+      },
     },
   });
 
@@ -58,7 +70,7 @@ async function main(): Promise<void> {
 main().finally(() => prisma.$disconnect());
 ```
 
-Si tu lances ce script (`npx tsx scripts/test-prisma.ts`), tu verras :
+Si tu lances ce script avec un runner TypeScript, tu verras :
 
 ```
 Créé : { id: 1, slug: 'mon-portfolio', titre: 'Mon portfolio', ... }
@@ -211,7 +223,7 @@ const projet = await this.prisma.projet.create({
     slug: "mon-blog",
     titre: "Mon blog",
     description: "Articles de dev",
-    technos: "nextjs,prisma",
+    lien: "https://exemple.com/blog",
   },
 });
 ```

@@ -77,11 +77,11 @@ Trois SGBD relationnels très utilisés. Tableau de comparaison rapide :
 
 ### Quand choisir quoi ?
 
-- **SQLite** : tu débutes, ton appli est mono-utilisateur, ou c'est juste pour bidouiller. C'est ce que tu utilisais avec Prisma jusqu'ici.
+- **SQLite** : tu débutes, ton appli est mono-utilisateur, ou c'est juste pour bidouiller. On ne l'utilise pas dans notre fil rouge, parce qu'on veut apprendre directement une vraie base serveur.
 - **MySQL** : si une équipe ou un hébergeur impose ça. Ça marche bien.
 - **PostgreSQL** : par défaut pour tout projet sérieux. C'est notre choix.
 
-> Tu connais déjà SQLite via Prisma. La bonne nouvelle : Prisma sait parler à PostgreSQL avec les **mêmes commandes**. On change juste le `provider` dans le `schema.prisma`. On le fait au cours 08.
+> La bonne nouvelle : Prisma sait très bien parler à PostgreSQL. Quand on arrivera au cours Prisma, on le branchera directement sur la base `portfolio` que tu vas créer ici.
 
 ---
 
@@ -147,7 +147,7 @@ Pas encore d'action sur le projet à ce cours-ci : on continue de comprendre.
 - On va bientôt installer Postgres (cours 03).
 - Notre base s'appellera `portfolio`.
 - Nos tables seront en `snake_case` pluriel : `projets`, `tags`, `projets_tags`.
-- Quand on basculera Prisma sur Postgres (cours 08), Prisma respectera ces conventions.
+- Quand on branchera Prisma sur Postgres, Prisma respectera ces conventions.
 
 ---
 

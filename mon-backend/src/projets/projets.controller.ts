@@ -7,12 +7,12 @@ export class ProjetsController {
   constructor(private readonly projetsService: ProjetsService) {}
 
   @Get()
-  trouverTous(): Projet[] {
+  trouverTous(): Promise<Projet[]> {
     return this.projetsService.trouverTous();
   }
 
   @Get(':slug')
-  trouverParSlug(@Param('slug') slug: string): Projet {
+  trouverParSlug(@Param('slug') slug: string): Promise<Projet> {
     return this.projetsService.trouverParSlug(slug);
   }
 }

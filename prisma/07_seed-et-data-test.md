@@ -10,7 +10,7 @@ Comment **peupler automatiquement** la base avec des données initiales (un "see
 Cas d'usage :
 
 - Tu lances `migrate reset` et tu veux retrouver tes 3 projets de démo.
-- Un nouveau dev clone le repo : il fait `npm install`, lance les migrations, fait `prisma db seed`, et a immédiatement une base utilisable.
+- Un nouveau dev clone le repo : il fait `npm install`, lance les migrations, fait `npm run db:seed`, et a immédiatement une base utilisable.
 - En tests automatisés (cours plus tard), on sème la base avant chaque suite.
 
 Sans seed, tu te retrouves toujours à recréer 10 projets à la main dans Prisma Studio. Une corvée.
@@ -21,16 +21,16 @@ Prisma utilise une convention :
 
 1. Tu écris un **fichier** `prisma/seed.ts`.
 2. Tu déclares dans `package.json` **comment l'exécuter**.
-3. Tu lances `npx prisma db seed`.
+3. Tu lances `npm run db:seed`.
 
 C'est aussi appelé **automatiquement** après `npx prisma migrate reset`. Pratique.
 
 ## Étape 1 — Installer un runner TypeScript
 
-Le seed est en TypeScript. Pour l'exécuter directement, on a besoin d'un outil comme `tsx` ou `ts-node`. **`tsx`** est plus rapide et plus simple en 2026.
+Le seed est en TypeScript. Ton backend a déjà `ts-node`, donc on va l'utiliser.
 
 ```bash
-npm i -D tsx
+npm i -D ts-node
 ```
 
 ## Étape 2 — Écrire `prisma/seed.ts`
@@ -49,27 +49,47 @@ async function main(): Promise<void> {
       slug: "mon-portfolio",
       titre: "Mon portfolio",
       description: "Site personnel construit avec Next.js et Tailwind.",
-      technos: "nextjs,tailwind,typescript",
+      lien: "https://exemple.com/portfolio",
+      technologies: ["Next.js", "Tailwind", "TypeScript"],
     },
     {
       slug: "mon-blog",
       titre: "Mon blog",
       description: "Blog technique pour partager mes apprentissages.",
-      technos: "nextjs,markdown,prisma",
+      lien: "https://exemple.com/blog",
+      technologies: ["Next.js", "Prisma", "PostgreSQL"],
     },
     {
       slug: "api-todos",
       titre: "API Todos",
       description: "Une API REST avec NestJS et Prisma.",
-      technos: "nestjs,prisma,postgresql",
+      lien: "https://exemple.com/api",
+      technologies: ["NestJS", "Prisma", "PostgreSQL"],
     },
   ];
 
+  await prisma.projetTechnologie.deleteMany();
+  await prisma.technologie.deleteMany();
+  await prisma.projet.deleteMany();
+
   for (const projet of projets) {
-    await prisma.projet.upsert({
-      where: { slug: projet.slug },
-      update: projet,
-      create: projet,
+    await prisma.projet.create({
+      data: {
+        slug: projet.slug,
+        titre: projet.titre,
+        description: projet.description,
+        lien: projet.lien,
+        technologies: {
+          create: projet.technologies.map((nom) => ({
+            technologie: {
+              connectOrCreate: {
+                where: { nom },
+                create: { nom },
+              },
+            },
+          })),
+        },
+      },
     });
   }
 
@@ -102,30 +122,27 @@ C'est **la** bonne pratique pour les seeds en équipe.
 
 ## Étape 3 — Configurer `package.json`
 
-Ajoute cette section à la fin de `mon-backend/package.json` :
+Ajoute ce script dans `mon-backend/package.json` :
 
 ```json
 {
-  "name": "mon-backend",
-  "...": "...",
-  "prisma": {
-    "seed": "tsx prisma/seed.ts"
+  "scripts": {
+    "db:seed": "ts-node prisma/seed.ts"
   }
 }
 ```
 
-Cette clé `prisma.seed` dit à Prisma : "voilà la commande à lancer pour le seed".
+Ce script dit à npm comment lancer le seed.
 
 ## Étape 4 — Lancer le seed
 
 ```bash
-npx prisma db seed
+npm run db:seed
 ```
 
 Tu devrais voir :
 
 ```
-Running seed command `tsx prisma/seed.ts` ...
 Seeding...
 Seed terminé : 3 projets.
 ```
@@ -145,7 +162,7 @@ async function main(): Promise<void> {
       slug: "mon-portfolio",
       titre: "Mon portfolio",
       description: "Site perso.",
-      technos: "nextjs,tailwind",
+      lien: "https://exemple.com/portfolio",
       images: {
         create: [
           { url: "/img/portfolio-1.png", alt: "Page d'accueil" },
@@ -167,7 +184,7 @@ const projet = await prisma.projet.upsert({
     slug: "mon-portfolio",
     titre: "Mon portfolio",
     description: "Site perso.",
-    technos: "nextjs,tailwind",
+    lien: "https://exemple.com/portfolio",
   },
 });
 
@@ -210,7 +227,7 @@ for (let i = 0; i < 100; i++) {
       slug: faker.lorem.slug(),
       titre: faker.lorem.words(3),
       description: faker.lorem.paragraph(),
-      technos: faker.lorem.words(2),
+      lien: faker.internet.url(),
     },
   });
 }
@@ -220,7 +237,7 @@ for (let i = 0; i < 100; i++) {
 
 ## Bonnes pratiques
 
-1. **Idempotence** : utilise `upsert`. Toujours.
+1. **Idempotence** : nettoie les données de démo puis recrée-les, ou utilise `upsert` quand il n'y a pas de relations complexes.
 2. **Dépendances claires** : crée d'abord les parents (User), puis les enfants (Profil).
 3. **Pas de secrets en dur** : si tu sème un mot de passe admin, lis-le depuis `.env`.
 4. **Logs explicites** : un `console.log` à chaque étape, ça aide quand le seed échoue.
@@ -236,21 +253,20 @@ for (let i = 0; i < 100; i++) {
 
 Dans `mon-backend/` :
 
-1. `npm i -D tsx`
+1. Vérifie que `ts-node` est installé.
 2. Crée `prisma/seed.ts` avec le code ci-dessus.
-3. Ajoute la clé `prisma.seed` dans `package.json`.
-4. Lance `npx prisma db seed`.
+3. Ajoute le script `"db:seed": "ts-node prisma/seed.ts"` dans `package.json`.
+4. Lance `npm run db:seed`.
 5. Vérifie dans Prisma Studio que les 3 projets sont là.
-6. Lance une seconde fois `npx prisma db seed` : pas d'erreur, mêmes données. C'est l'idempotence en action.
-7. Test ultime : lance `npx prisma migrate reset`. La base est effacée, les migrations rejouées, et le seed relancé. Tu retrouves tes 3 projets, tout neufs.
+6. Lance une seconde fois `npm run db:seed` : pas d'erreur, mêmes données. C'est l'idempotence en action.
+7. Test ultime : lance `npx prisma migrate reset`, puis `npm run db:seed`. Tu retrouves tes projets de démo.
 8. Commit : `git add prisma/seed.ts package.json && git commit -m "feat: prisma seed for initial projets"`.
 
 ## Résumé
 - Un **seed** peuple la base avec des données initiales.
-- Fichier `prisma/seed.ts`, configuré dans `package.json` via `prisma.seed`.
-- Lancé avec `npx prisma db seed`, **automatiquement** après `migrate reset`.
-- **Toujours idempotent** : utilise `upsert`, pas `create`.
-- Lance `tsx prisma/seed.ts` pour exécuter du TypeScript directement.
+- Fichier `prisma/seed.ts`, lancé par le script `npm run db:seed`.
+- **Toujours idempotent** : nettoie puis recrée, ou utilise `upsert`.
+- Lance `ts-node prisma/seed.ts` pour exécuter du TypeScript directement.
 - Pour des relations, sois explicite (deleteMany puis create) pour rester idempotent.
 
 ## Questions

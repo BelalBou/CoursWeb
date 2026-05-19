@@ -298,14 +298,11 @@ Dans `mon-backend/` :
 - **En prod** : `migrate deploy`, jamais `migrate dev` ni `migrate reset`.
 - **Sécurité** : Prisma reste côté serveur, valide les inputs, méfie-toi du raw SQL.
 
-## Et après ? Direction PostgreSQL
+## Et après ? Direction Linux
 
-Bravo, tu maîtrises Prisma avec SQLite. Mais SQLite a ses limites :
-- Pas de tableaux natifs (`String[]`).
-- Pas de support multi-utilisateur fort.
-- Pas conçu pour la prod à grande échelle.
+Bravo, tu as maintenant la chaîne complète côté code : Next.js pour le frontend, NestJS pour l'API, PostgreSQL pour la base, Prisma pour parler à cette base proprement.
 
-Au prochain cours, on attaque **PostgreSQL** : la base de données préférée de la plupart des équipes pros. Bonne nouvelle : grâce à Prisma, tu changes **une seule ligne** (`provider = "postgresql"`) et 95% de ton code ne bouge pas. C'est la beauté d'un ORM moderne.
+La prochaine grande étape, c'est **Linux** : comprendre le serveur sur lequel on pourra déployer tout ça.
 
 ## Questions
 *(Cette section sera remplie au fur et à mesure)*
@@ -315,5 +312,5 @@ Au prochain cours, on attaque **PostgreSQL** : la base de données préférée d
 ## Navigation
 
 - ← Précédent : [Cours 07 — Seed et données de test](./07_seed-et-data-test.md)
-- → Suivant : [Cours 01 PostgreSQL — C'est quoi une base de données](../postgresql/01_cest-quoi-une-base-de-donnees.md)
+- → Suivant : [Cours 01 Linux — C'est quoi Linux](../linux/01_cest-quoi-linux.md)
 - Sommaire : [README](../README.md)

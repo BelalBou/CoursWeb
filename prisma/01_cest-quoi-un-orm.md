@@ -20,7 +20,7 @@ Par exemple, un tiroir "Projets" :
 
 Une base de données, c'est ça : un endroit où **on range des données pour les retrouver plus tard**, même quand le serveur s'éteint.
 
-On verra PostgreSQL en détail dans le prochain cours. Pour l'instant, retiens juste : **base de données = classeur magique qui survit au redémarrage**.
+Tu viens de voir PostgreSQL dans le bloc précédent. Pour l'instant, retiens surtout : **base de données = classeur organisé qui survit au redémarrage**.
 
 ## Le problème : la base parle "SQL", pas "TypeScript"
 
@@ -127,15 +127,17 @@ Avec Prisma, on va :
 3. Remplacer les tableaux par des appels à Prisma.
 4. Les données vont **rester** entre deux redémarrages.
 
-## Une astuce : on commence avec SQLite
+## On branche Prisma directement sur PostgreSQL
 
-Une vraie base de données comme PostgreSQL demande une installation, un serveur qui tourne, des utilisateurs, des mots de passe... C'est trop pour aujourd'hui.
+Comme tu as déjà installé PostgreSQL juste avant, on ne passe pas par SQLite dans ce parcours.
 
-À la place, on va utiliser **SQLite**.
+On va utiliser directement la base `portfolio` :
 
-SQLite, c'est une base de données qui tient **dans un seul fichier** sur ton ordinateur. Pas de serveur à lancer. Pas d'installation. Juste un fichier `dev.db` qui apparaît dans ton projet.
+```env
+DATABASE_URL="postgresql://cours:secret@localhost:5433/portfolio"
+```
 
-C'est parfait pour apprendre. Tout le code Prisma qu'on va écrire fonctionnera **exactement pareil** quand on passera à PostgreSQL plus tard. C'est ça la magie de Prisma : tu changes une seule ligne (`provider`), et tout le reste reste identique.
+Ça rend le cours plus proche d'un vrai projet : tu apprends Prisma avec la même famille de base que celle qu'on déploiera plus tard.
 
 ## TypeScript vu dans ce cours
 
@@ -150,7 +152,7 @@ Pas de code à écrire dans ce cours. On installe au prochain. Mais avant de con
 - **SQL** = le langage que parlent les bases. Puissant mais pénible.
 - **ORM** = un traducteur entre ton code TypeScript et le SQL.
 - **Prisma** = un ORM moderne, type-safe, avec un schéma déclaratif et un client auto-généré.
-- On va utiliser **SQLite** (un seul fichier) pour apprendre, puis passer à **PostgreSQL** plus tard.
+- On va utiliser **PostgreSQL directement**, puisque la base existe déjà dans le parcours.
 
 ## Questions
 *(Cette section sera remplie au fur et à mesure)*
@@ -159,6 +161,6 @@ Pas de code à écrire dans ce cours. On installe au prochain. Mais avant de con
 
 ## Navigation
 
-- ← Précédent : [Cours 10 NestJS — Organisation pour grandir](../nestjs/10_organisation-pour-grandir.md)
+- ← Précédent : [Cours 08 PostgreSQL — Administration et prod](../postgresql/08_administration-et-postgres-en-prod.md)
 - → Suivant : [Cours 02 — Installation et schéma](./02_installation-et-schema.md)
 - Sommaire : [README](../README.md)

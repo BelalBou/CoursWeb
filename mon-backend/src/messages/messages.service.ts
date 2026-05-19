@@ -1,34 +1,47 @@
 import { ConflictException, Injectable } from '@nestjs/common';
-import { randomUUID } from 'crypto';
+import { Prisma } from '@prisma/client';
 import { CreateMessageDto } from './dto/create-message.dto';
 import { Message } from './message.entity';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class MessagesService {
-  private readonly messages: Message[] = [];
+  constructor(private readonly prisma: PrismaService) {}
 
-  creer(dto: CreateMessageDto): Message {
-    const dejaEnvoye = this.messages.some(
-      (m) => m.email === dto.email && m.message === dto.message,
-    );
+  async creer(dto: CreateMessageDto): Promise<Message> {
+    try {
+      const message = await this.prisma.message.create({
+        data: dto,
+      });
 
-    if (dejaEnvoye) {
-      throw new ConflictException('Tu as deja envoye ce message');
+      return this.toEntity(message);
+    } catch (error) {
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.code === 'P2002'
+      ) {
+        throw new ConflictException('Tu as deja envoye ce message');
+      }
+
+      throw error;
     }
-
-    const message: Message = {
-      id: randomUUID(),
-      nom: dto.nom,
-      email: dto.email,
-      message: dto.message,
-      recuLe: new Date(),
-    };
-
-    this.messages.push(message);
-    return message;
   }
 
-  trouverTous(): Message[] {
-    return this.messages;
+  async trouverTous(): Promise<Message[]> {
+    const messages = await this.prisma.message.findMany({
+      orderBy: { recuLe: 'desc' },
+    });
+
+    return messages.map((message) => this.toEntity(message));
+  }
+
+  private toEntity(message: Message): Message {
+    return {
+      id: message.id,
+      nom: message.nom,
+      email: message.email,
+      message: message.message,
+      recuLe: message.recuLe,
+    };
   }
 }

@@ -62,24 +62,9 @@ On crée un vrai backend en TypeScript pour servir nos données et recevoir les 
 | 09 | Tests unitaires | [Lire](./nestjs/09_tests-unitaires.md) |
 | 10 | Organiser le projet pour grandir | [Lire](./nestjs/10_organisation-pour-grandir.md) |
 
-### 3. Prisma — l'ORM moderne
+### 3. PostgreSQL — la vraie base de données
 
-On ajoute une vraie persistance avec Prisma. On commence en SQLite (zéro install) puis on passera à PostgreSQL au cours suivant.
-
-| # | Chapitre | Lien |
-|---|----------|------|
-| 01 | C'est quoi un ORM ? | [Lire](./prisma/01_cest-quoi-un-orm.md) |
-| 02 | Installation et schéma | [Lire](./prisma/02_installation-et-schema.md) |
-| 03 | Les migrations | [Lire](./prisma/03_migrations.md) |
-| 04 | Le Prisma Client | [Lire](./prisma/04_le-prisma-client.md) |
-| 05 | Les relations | [Lire](./prisma/05_relations.md) |
-| 06 | Prisma dans NestJS | [Lire](./prisma/06_prisma-dans-nestjs.md) |
-| 07 | Seed et données de test | [Lire](./prisma/07_seed-et-data-test.md) |
-| 08 | Bonnes pratiques | [Lire](./prisma/08_bonnes-pratiques.md) |
-
-### 4. PostgreSQL — la vraie base de données
-
-On apprend SQL et PostgreSQL en profondeur, puis on bascule notre Prisma de SQLite vers PostgreSQL.
+On apprend SQL et PostgreSQL avant Prisma pour comprendre ce que la base fait vraiment : tables, requêtes, relations, index et administration.
 
 | # | Chapitre | Lien |
 |---|----------|------|
@@ -91,6 +76,21 @@ On apprend SQL et PostgreSQL en profondeur, puis on bascule notre Prisma de SQLi
 | 06 | Jointures et relations | [Lire](./postgresql/06_jointures-et-relations.md) |
 | 07 | Index et performance | [Lire](./postgresql/07_index-et-performance.md) |
 | 08 | Administration et PostgreSQL en prod | [Lire](./postgresql/08_administration-et-postgres-en-prod.md) |
+
+### 4. Prisma — l'ORM moderne
+
+On ajoute une vraie persistance dans NestJS avec Prisma, directement branché sur PostgreSQL.
+
+| # | Chapitre | Lien |
+|---|----------|------|
+| 01 | C'est quoi un ORM ? | [Lire](./prisma/01_cest-quoi-un-orm.md) |
+| 02 | Installation et schéma | [Lire](./prisma/02_installation-et-schema.md) |
+| 03 | Les migrations | [Lire](./prisma/03_migrations.md) |
+| 04 | Le Prisma Client | [Lire](./prisma/04_le-prisma-client.md) |
+| 05 | Les relations | [Lire](./prisma/05_relations.md) |
+| 06 | Prisma dans NestJS | [Lire](./prisma/06_prisma-dans-nestjs.md) |
+| 07 | Seed et données de test | [Lire](./prisma/07_seed-et-data-test.md) |
+| 08 | Bonnes pratiques | [Lire](./prisma/08_bonnes-pratiques.md) |
 
 ### 5. Linux — déployer en vrai
 
@@ -129,7 +129,8 @@ TypeScript est utilisé partout dans le cours. Si tu veux comprendre un concept 
 
 - **Cours Next.js** → un site complet : pages, composants, formulaire de contact, page de projets dynamiques, SEO, déploiement Vercel.
 - **Cours NestJS** → un backend dédié qui sert les projets et reçoit les messages de contact.
-- **Cours Prisma + PostgreSQL** → on remplace les données en dur par une vraie base.
+- **Cours PostgreSQL** → on crée une vraie base et on apprend SQL à la main.
+- **Cours Prisma** → on branche NestJS à PostgreSQL proprement, avec migrations et types TypeScript.
 - **Cours Linux** → on met le tout en ligne sur un VPS, avec nginx et HTTPS.
 
 Le code du frontend est dans le dossier `mon-premier-projet/` (Next.js). Le backend est dans `mon-backend/` (NestJS). À ce stade, le frontend lit les projets depuis le backend et le formulaire de contact envoie ses messages vers `POST /messages`.

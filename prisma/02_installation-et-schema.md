@@ -26,10 +26,10 @@ Petite analogie : `prisma` c'est le **menuisier** qui fabrique tes meubles, `@pr
 Toujours dans `mon-backend/` :
 
 ```bash
-npx prisma init --datasource-provider sqlite
+npx prisma init --datasource-provider postgresql
 ```
 
-`npx` lance un outil installé localement. `prisma init` crée la structure de base. `--datasource-provider sqlite` dit "on utilise SQLite" (pour démarrer sans installation).
+`npx` lance un outil installé localement. `prisma init` crée la structure de base. `--datasource-provider postgresql` dit "on utilise PostgreSQL", la base qu'on a installée juste avant.
 
 Cette commande crée :
 
@@ -48,12 +48,17 @@ Et elle ajoute `.env` au `.gitignore` (tant mieux, on ne commit jamais les secre
 Ouvre `.env`. Tu devrais voir quelque chose comme :
 
 ```
-DATABASE_URL="file:./dev.db"
+DATABASE_URL="postgresql://cours:secret@localhost:5433/portfolio"
 ```
 
-C'est l'**adresse** de la base. Pour SQLite, c'est juste un chemin de fichier. `file:./dev.db` veut dire : le fichier `dev.db` à côté de `schema.prisma`.
+C'est l'**adresse** de la base. Ici :
 
-Pour PostgreSQL, ça ressemblerait à `postgresql://user:password@localhost:5432/madatabase`. Mais on verra ça plus tard.
+- `cours` = l'utilisateur Postgres.
+- `secret` = son mot de passe.
+- `localhost:5433` = ton ordinateur, port du conteneur Docker du cours.
+- `portfolio` = le nom de la base.
+
+Si ton port Docker est `5432` chez toi, garde `5432`. Sur notre machine de cours, `5432` était déjà pris, donc on utilise `5433`.
 
 ## Étape 4 — Le fichier `schema.prisma`
 
@@ -65,7 +70,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 ```
@@ -80,7 +85,7 @@ C'est ce qui va produire les types et les fonctions comme `prisma.projet.findMan
 ### Le bloc `datasource`
 > "Voilà à quelle base je me connecte, et où trouver l'URL."
 
-`provider = "sqlite"` : on utilise SQLite. `url = env("DATABASE_URL")` : l'URL est lue depuis le fichier `.env`. Comme ça, on **ne met jamais de secret directement dans le schéma**.
+`provider = "postgresql"` : on utilise PostgreSQL. `url = env("DATABASE_URL")` : l'URL est lue depuis le fichier `.env`. Comme ça, on **ne met jamais de secret directement dans le schéma**.
 
 ## Étape 5 — Notre premier model
 
@@ -90,15 +95,49 @@ Ajoute ceci à la fin de `schema.prisma` :
 
 ```prisma
 model Projet {
-  id          Int      @id @default(autoincrement())
-  slug        String   @unique
-  titre       String
-  description String
-  technos     String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id           Int                 @id @default(autoincrement())
+  slug         String              @unique
+  titre        String
+  description  String
+  lien         String
+  estPublie    Boolean             @default(true) @map("est_publie")
+  createdAt    DateTime            @default(now()) @map("created_at")
+  updatedAt    DateTime            @updatedAt @map("updated_at")
+  technologies ProjetTechnologie[]
 
   @@map("projets")
+}
+
+model Technologie {
+  id      Int                 @id @default(autoincrement())
+  nom     String              @unique
+  projets ProjetTechnologie[]
+
+  @@map("technologies")
+}
+
+model ProjetTechnologie {
+  projetId      Int @map("projet_id")
+  technologieId Int @map("technologie_id")
+
+  projet      Projet      @relation(fields: [projetId], references: [id], onDelete: Cascade)
+  technologie Technologie @relation(fields: [technologieId], references: [id], onDelete: Cascade)
+
+  @@id([projetId, technologieId])
+  @@index([technologieId])
+  @@map("projets_technologies")
+}
+
+model Message {
+  id      String   @id @default(uuid()) @db.Uuid
+  nom     String
+  email   String
+  message String
+  recuLe  DateTime @default(now()) @map("recu_le")
+
+  @@unique([email, message], name: "messages_email_message_unique")
+  @@index([recuLe(sort: Desc)])
+  @@map("messages")
 }
 ```
 
@@ -121,11 +160,11 @@ On lit ça **ligne par ligne**.
 
 Du texte, sans contrainte particulière.
 
-### `technos String`
+### `technologies ProjetTechnologie[]`
 
-Tu pourrais te dire : "mais c'est une liste, pas un seul mot !". Vrai. Mais SQLite **ne sait pas stocker des listes**. On va donc tricher pour l'instant : stocker `"react,nextjs,tailwind"` dans une chaîne, et la transformer en `["react", "nextjs", "tailwind"]` côté code. Au cours sur les relations, on verra une vraie solution avec une table séparée.
+Ce n'est pas une colonne simple. C'est une **relation** : un projet peut avoir plusieurs technologies, et une technologie peut appartenir à plusieurs projets.
 
-(En PostgreSQL, on aurait pu écrire `technos String[]`. SQLite ne supporte pas. C'est un des cas où le choix de la base influence le schéma.)
+On utilise une table de liaison explicite `projets_technologies`, exactement comme dans le cours PostgreSQL.
 
 ### `createdAt DateTime @default(now())`
 
@@ -175,7 +214,8 @@ type Projet = {
   slug: string;
   titre: string;
   description: string;
-  technos: string;
+  lien: string;
+  estPublie: boolean;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -189,11 +229,12 @@ Dans `mon-backend/` :
 
 1. `npm i -D prisma`
 2. `npm i @prisma/client`
-3. `npx prisma init --datasource-provider sqlite`
-4. Ouvre `prisma/schema.prisma` et ajoute le model `Projet` ci-dessus.
-5. Lance `npx prisma format` (Prisma reformate joliment ton schéma).
+3. `npx prisma init --datasource-provider postgresql`
+4. Mets `DATABASE_URL="postgresql://cours:secret@localhost:5433/portfolio"` dans `.env`.
+5. Ouvre `prisma/schema.prisma` et ajoute les models ci-dessus.
+6. Lance `npx prisma format` (Prisma reformate joliment ton schéma).
 
-À la fin de ce cours, tu **n'as pas encore** de fichier `dev.db` ni de table. C'est juste un plan sur le papier. On va le concrétiser au cours suivant avec les **migrations**.
+À la fin de ce cours, tu **n'as pas encore** modifié la base. C'est juste un plan sur le papier. On va le concrétiser au cours suivant avec les **migrations**.
 
 ## Résumé
 - Prisma s'installe en deux paquets : `prisma` (CLI, dev) et `@prisma/client` (runtime).

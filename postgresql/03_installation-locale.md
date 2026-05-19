@@ -41,6 +41,8 @@ docker run --name postgres-cours \
   -d postgres:16
 ```
 
+> Si ton ordinateur a déjà un PostgreSQL local sur le port `5432`, utilise `-p 5433:5432` et mets `5433` dans la `DATABASE_URL`.
+
 Décomposons morceau par morceau :
 
 | Bout de commande | Ce que ça veut dire |
@@ -227,7 +229,7 @@ Décortiqué :
 | `5432` | port | porte d'entrée |
 | `portfolio` | nom de la base | quel classeur ouvrir |
 
-> Cette URL, on va la mettre dans le fichier `.env` de notre projet au cours 08, dans la variable `DATABASE_URL`. **JAMAIS dans le code source committé.**
+> Cette URL, on va la mettre dans le fichier `.env` de notre backend quand on branchera Prisma, dans la variable `DATABASE_URL`. **JAMAIS dans le code source committé.**
 
 ---
 
@@ -264,7 +266,13 @@ Quelque part dans tes notes :
 DATABASE_URL="postgresql://cours:secret@localhost:5432/portfolio"
 ```
 
-On l'utilisera au cours 08. **Ne la pousse pas sur GitHub maintenant**, même si c'est une base locale : on prend l'habitude.
+Si tu as utilisé `-p 5433:5432`, note plutôt :
+
+```
+DATABASE_URL="postgresql://cours:secret@localhost:5433/portfolio"
+```
+
+On l'utilisera dans le bloc Prisma. **Ne la pousse pas sur GitHub maintenant**, même si c'est une base locale : on prend l'habitude.
 
 ---
 

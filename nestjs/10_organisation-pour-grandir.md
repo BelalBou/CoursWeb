@@ -256,7 +256,7 @@ Tu maîtrises maintenant :
 
 Mais ton backend stocke encore tes données dans un **tableau en mémoire**. Si tu redémarres le serveur, tout est perdu.
 
-C'est pour ça que la prochaine étape est essentielle : on va apprendre **Prisma**, un outil qui parle aux bases de données. Puis **PostgreSQL**, une vraie base de données. Puis **Linux**, pour déployer tout ça sur un serveur.
+C'est pour ça que la prochaine étape est essentielle : on va apprendre **PostgreSQL**, une vraie base de données. Ensuite seulement, on ajoutera **Prisma**, l'outil qui permettra à NestJS de parler à cette base proprement. Puis **Linux**, pour déployer tout ça sur un serveur.
 
 Une couche à la fois, comme toujours.
 
@@ -287,7 +287,7 @@ Une couche à la fois, comme toujours.
 - **Health check** avec `@nestjs/terminus`.
 - **Logger** intégré pour les messages serveur.
 - **Swagger** pour la doc API automatique.
-- Prochaine étape : **Prisma + PostgreSQL** pour stocker pour de vrai.
+- Prochaine étape : **PostgreSQL**, puis **Prisma**, pour stocker pour de vrai.
 
 ---
 
@@ -299,5 +299,5 @@ Une couche à la fois, comme toujours.
 ## Navigation
 
 - ← Précédent : [Cours 09 — Tests unitaires](./09_tests-unitaires.md)
-- → Suivant : [Cours 01 — C'est quoi un ORM ?](../prisma/01_cest-quoi-un-orm.md)
+- → Suivant : [Cours 01 PostgreSQL — C'est quoi une base de données ?](../postgresql/01_cest-quoi-une-base-de-donnees.md)
 - Sommaire : [README](../README.md)
