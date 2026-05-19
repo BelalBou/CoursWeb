@@ -180,6 +180,6 @@ Dans les prochains cours :
 
 ## Navigation
 
-- ← Précédent : [Cours 10 NestJS — S'organiser pour grandir](../nestjs/10_organisation-pour-grandir.md)
+- ← Précédent : [Cours 10 NestJS — S'organiser pour grandir](../02_nestjs/10_organisation-pour-grandir.md)
 - → Suivant : [Cours 02 — C'est quoi PostgreSQL](./02_cest-quoi-postgresql.md)
 - Sommaire : [README](../README.md)

@@ -109,6 +109,6 @@ Plus tard (cours Prisma + PostgreSQL), on remplacera le tableau en mémoire par 
 
 ## Navigation
 
-- ← Précédent : [Cours 15 — Environnement et déploiement](../nextjs/15_environnement-et-deploiement.md)
+- ← Précédent : [Cours 15 — Environnement et déploiement](../01_nextjs/15_environnement-et-deploiement.md)
 - → Suivant : [Cours 02 — Installation et structure](./02_installation-et-structure.md)
 - Sommaire : [README](../README.md)

@@ -138,6 +138,6 @@ Quand tu tapes `ls`, ta commande passe par le shell, qui demande au kernel, qui 
 
 ## Navigation
 
-- ← Précédent : [Cours 08 PostgreSQL](../postgresql/08_administration-et-postgres-en-prod.md)
+- ← Précédent : [Cours 08 PostgreSQL](../03_postgresql/08_administration-et-postgres-en-prod.md)
 - → Suivant : [Cours 02](./02_le-terminal.md)
 - Sommaire : [README](../README.md)

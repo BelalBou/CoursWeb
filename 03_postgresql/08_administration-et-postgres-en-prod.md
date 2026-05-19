@@ -326,5 +326,5 @@ Si une de ces étapes échoue : relis le message d'erreur, vérifie ton URL, vé
 ## Navigation
 
 - ← Précédent : [Cours 07 — Index et performance](./07_index-et-performance.md)
-- → Suivant : [Cours 01 Prisma — C'est quoi un ORM ?](../prisma/01_cest-quoi-un-orm.md)
+- → Suivant : [Cours 01 Prisma — C'est quoi un ORM ?](../04_prisma/01_cest-quoi-un-orm.md)
 - Sommaire : [README](../README.md)

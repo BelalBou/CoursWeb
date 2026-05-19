@@ -22,30 +22,30 @@
 - Toujours finir un cours avec "Prochain cours :" pour qu'il sache ce qui suit
 
 ## Choix techniques importants
-- **TypeScript activé partout** : tous les projets utilisent TypeScript. L'expliquer au fur et à mesure dans le code ET dans `typescript/00_intro-typescript.md`.
+- **TypeScript activé partout** : tous les projets utilisent TypeScript. L'expliquer au fur et à mesure dans le code ET dans `06_typescript/01_cest-quoi-typescript.md`.
 - Chaque concept TypeScript rencontré dans un cours Next.js doit être noté dans le fichier TypeScript dédié.
 
 ## Structure du projet
 ```
 CoursWeb/
 ├── CLAUDE.md                    ← ce fichier
-├── nextjs/
+├── 01_nextjs/
 │   ├── 01_cest-quoi-nextjs.md
 │   ├── 02_installation.md
 │   ├── 03_pages-et-routing.md
 │   └── ...
-├── typescript/
-│   ├── 01_cest-quoi-typescript.md
-│   ├── 02_les-types-de-base.md
-│   ├── 03_les-objets-et-type.md
-│   ├── 04_les-fonctions.md
-│   ├── 05_les-interfaces.md
-│   ├── 06_les-generiques.md
-│   └── 07_typescript-et-react.md
-├── nestjs/
-├── prisma/
-├── postgresql/
-└── linux/
+├── 02_nestjs/
+├── 03_postgresql/
+├── 04_prisma/
+├── 05_linux/
+└── 06_typescript/
+    ├── 01_cest-quoi-typescript.md
+    ├── 02_les-types-de-base.md
+    ├── 03_les-objets-et-type.md
+    ├── 04_les-fonctions.md
+    ├── 05_les-interfaces.md
+    ├── 06_les-generiques.md
+    └── 07_typescript-et-react.md
 ```
 
 ## Le projet fil rouge

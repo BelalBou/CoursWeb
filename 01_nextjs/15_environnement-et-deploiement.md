@@ -385,5 +385,5 @@ Pour aller plus loin, on a besoin d'un **vrai backend** et d'une **vraie base de
 ## Navigation
 
 - ← Précédent : [Cours 14 — Route Handlers et API interne](./14_route-handlers-et-api-interne.md)
-- → Suivant : [Cours 01 — C'est quoi NestJS](../nestjs/01_cest-quoi-nestjs.md)
+- → Suivant : [Cours 01 — C'est quoi NestJS](../02_nestjs/01_cest-quoi-nestjs.md)
 - Sommaire : [README](../README.md)

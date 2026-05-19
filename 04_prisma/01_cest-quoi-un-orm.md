@@ -161,6 +161,6 @@ Pas de code à écrire dans ce cours. On installe au prochain. Mais avant de con
 
 ## Navigation
 
-- ← Précédent : [Cours 08 PostgreSQL — Administration et prod](../postgresql/08_administration-et-postgres-en-prod.md)
+- ← Précédent : [Cours 08 PostgreSQL — Administration et prod](../03_postgresql/08_administration-et-postgres-en-prod.md)
 - → Suivant : [Cours 02 — Installation et schéma](./02_installation-et-schema.md)
 - Sommaire : [README](../README.md)

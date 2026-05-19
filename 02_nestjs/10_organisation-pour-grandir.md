@@ -299,5 +299,5 @@ Une couche à la fois, comme toujours.
 ## Navigation
 
 - ← Précédent : [Cours 09 — Tests unitaires](./09_tests-unitaires.md)
-- → Suivant : [Cours 01 PostgreSQL — C'est quoi une base de données ?](../postgresql/01_cest-quoi-une-base-de-donnees.md)
+- → Suivant : [Cours 01 PostgreSQL — C'est quoi une base de données ?](../03_postgresql/01_cest-quoi-une-base-de-donnees.md)
 - Sommaire : [README](../README.md)
