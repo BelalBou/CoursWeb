@@ -4,6 +4,24 @@ import { useState } from "react";
 
 type Statut = "idle" | "envoi" | "ok" | "erreur";
 
+type ApiErrorBody = {
+  message?: string | string[];
+  error?: string;
+  statusCode?: number;
+};
+
+function messageErreurDepuisApi(body: ApiErrorBody): string {
+  if (Array.isArray(body.message)) {
+    return body.message[0] ?? "Le formulaire contient une erreur.";
+  }
+
+  if (body.message) {
+    return body.message;
+  }
+
+  return "Impossible d'envoyer le message pour le moment.";
+}
+
 export default function ContactForm() {
   const [statut, setStatut] = useState<Statut>("idle");
   const [messageRetour, setMessageRetour] = useState("");
@@ -29,7 +47,10 @@ export default function ContactForm() {
       });
 
       if (!response.ok) {
-        throw new Error("Echec envoi");
+        const body = (await response.json().catch(() => ({}))) as ApiErrorBody;
+        setStatut("erreur");
+        setMessageRetour(messageErreurDepuisApi(body));
+        return;
       }
 
       event.currentTarget.reset();
